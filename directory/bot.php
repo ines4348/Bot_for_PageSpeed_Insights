@@ -1,5 +1,5 @@
 <?php
-    include('vendor/autoload.php'); //Подключаем библиотеку
+    include('../vendor/autoload.php'); //Подключаем библиотеку
     use Telegram\Bot\Api; 
 
     $telegram = new Api('831949384:AAEdN3KQz00sMaFto2yLotRGETTFmw_dk7c'); //Устанавливаем токен, полученный у BotFather
