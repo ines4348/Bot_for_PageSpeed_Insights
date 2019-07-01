@@ -60,8 +60,6 @@
               $info = curl_getinfo($ch);
               //Выводим какую-то инфомрацию
               echo 'Запрос выполнился за  ' . $info['total_time'] . ' сек. к URL: ' . $info['url'];
-              
-              }
         }else{
         	$reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
         	$telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
