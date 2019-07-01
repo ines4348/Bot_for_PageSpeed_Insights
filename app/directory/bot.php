@@ -72,6 +72,7 @@
               //Выводим какую-то инфомрацию
               $currentMessage = "Запрос выполнился за  ".$info['total_time'].' сек. к URL: '.$info['url'];
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $currentMessage ]);
+              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $output ]);
         }else{
         	$reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
         	$telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
