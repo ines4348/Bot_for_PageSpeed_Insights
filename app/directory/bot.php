@@ -8,7 +8,7 @@
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя 1
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["Последние статьи"],["Картинка"],["Гифка"],["View Hello, world!"]]; //Клавиатура
+    $keyboard = [["Последние статьи"],["Картинка"],["Запрос API"],["View Hello, world!"]]; //Клавиатура
     // 1. инициализация
     $ch = curl_init();
 
