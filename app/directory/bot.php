@@ -8,7 +8,6 @@
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя 1
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $currentname = $result["username"]; //Юзернейм пользователя
     $keyboard = [["Последние статьи"],["Картинка"],["Гифка"],["View Hello, world!"]]; //Клавиатура
 
     if($text){
@@ -17,15 +16,15 @@
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }elseif ($text == "/sayhello") {
-            $reply = "Hello, world!". ' имя '.$name;
+            $reply = "Hello, world!";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }elseif ($text == "View Hello, world!") {
             $reply = "Hello, world!";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
         }elseif ($text == "/sayhelloforperson") {
-            if (isset($currentname))
+            if (isset($name))
             {
-              $reply = "Hello, world, ".$result["username"]."!";
+              $reply = "Hello, world, ".$name."!";
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
             }else 
             {
