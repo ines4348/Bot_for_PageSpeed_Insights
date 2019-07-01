@@ -51,7 +51,8 @@
                 $respones = $curl->get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com");
                 var_dump($respones);
                 $result = json_decode($respones);
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "<br />Title : ".$result->title ]);
+                $textJson = $result->captchaResult;
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "<br />Title : ".$textJson ]);
             }catch (Exception $e){
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $e->getMessage()  ]);
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $curl->getError() ]);
