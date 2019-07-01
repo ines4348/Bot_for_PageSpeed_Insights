@@ -17,7 +17,7 @@
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }elseif ($text == "/sayhello") {
-            $reply = "Hello, world!";
+            $reply = "Hello, world!". ' имя '.$name;
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }elseif ($text == "View Hello, world!") {
             $reply = "Hello, world!";
@@ -29,7 +29,7 @@
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
             }else 
             {
-              $reply = "Привет незнакомец!__".$currentname;
+              $reply = "Привет незнакомец!";
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }
         }elseif ($text == "/help") {
