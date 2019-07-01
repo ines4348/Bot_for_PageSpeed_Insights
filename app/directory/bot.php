@@ -51,10 +51,10 @@
                 $respones = $curl->get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com");
                 var_dump($respones);
                 $result = json_decode($respones);
-                echo "<br />Title : ".$result->title;
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "<br />Title : ".$result->title ]);
             }catch (Exception $e){
-                echo $e->getMessage();
-                echo $curl->getError();
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $e->getMessage()  ]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $curl->getError() ]);
             }
         }elseif ($text == "Ping API") {
               $output = curl_exec($ch);
