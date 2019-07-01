@@ -67,11 +67,14 @@
                 return;
               }
               
-           //Получаем информацию о запросе
+             //Получаем информацию о запросе
               $info = curl_getinfo($ch);
+              // 3. получаем HTML в качестве результата
+              $output = curl_exec($ch);
+           
               //Выводим какую-то инфомрацию
               $currentMessage = "Запрос выполнился за  ".$info['total_time'].' сек. к URL: '.$info['url'];
-              $result = json_decode($info);
+              $result = json_decode($output);
               $textJson = $result->captchaResult;
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $currentMessage ]);
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $textJson ]);
