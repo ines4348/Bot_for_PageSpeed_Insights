@@ -29,7 +29,7 @@
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
             }else 
             {
-              $reply = "Привет незнакомец! ".$currentname;
+              $reply = "Привет незнакомец!__".$currentname;
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }
         }elseif ($text == "/help") {
