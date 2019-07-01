@@ -52,14 +52,16 @@
               // А вдруг ошибочка?
               if ($output === FALSE) {
                 //Тут-то мы о ней и скажем
-                  echo "cURL Error: " . curl_error($ch);
+                  $errorMessage = "cURL Error: ".curl_error($ch);
+                  $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $errorMessage ]);
                 return;
               }
               
            //Получаем информацию о запросе
               $info = curl_getinfo($ch);
               //Выводим какую-то инфомрацию
-              echo 'Запрос выполнился за  ' . $info['total_time'] . ' сек. к URL: ' . $info['url'];
+              $currentMessage = "Запрос выполнился за  ".$info['total_time'].' сек. к URL: '.$info['url'];
+              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $currentMessage ]);
         }else{
         	$reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
         	$telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
