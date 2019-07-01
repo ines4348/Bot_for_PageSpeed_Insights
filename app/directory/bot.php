@@ -8,7 +8,7 @@
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя 1
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["Последние статьи"],["Картинка"],["Запрос API"],["View Hello, world!"]]; //Клавиатура
+    $keyboard = [["Последние статьи"],["Ping API"],["Получить ответ от API"],["View Hello, world!"]]; //Клавиатура
     // 1. инициализация
     $ch = curl_init();
 
@@ -44,10 +44,19 @@
         }elseif ($text == "Картинка") {
             $url = "https://68.media.tumblr.com/6d830b4f2c455f9cb6cd4ebe5011d2b8/tumblr_oj49kevkUz1v4bb1no1_500.jpg";
             $telegram->sendPhoto([ 'chat_id' => $chat_id, 'photo' => $url, 'caption' => "Описание." ]);
-        }elseif ($text == "Гифка") {
-            $url = "https://68.media.tumblr.com/bd08f2aa85a6eb8b7a9f4b07c0807d71/tumblr_ofrc94sG1e1sjmm5ao1_400.gif";
-            $telegram->sendDocument([ 'chat_id' => $chat_id, 'document' => $url, 'caption' => "Описание." ]);
-        }elseif ($text == "Запрос API") {
+        }elseif ($text == "Получить ответ от API") {
+            $curl = new Curl();
+
+            try {
+                $respones = $curl->get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com");
+                var_dump($respones);
+                $result = json_decode($respones);
+                echo "<br />Title : ".$result->title;
+            }catch (Exception $e){
+                echo $e->getMessage();
+                echo $curl->getError();
+            }
+        }elseif ($text == "Ping API") {
               $output = curl_exec($ch);
               // А вдруг ошибочка?
               if ($output === FALSE) {
