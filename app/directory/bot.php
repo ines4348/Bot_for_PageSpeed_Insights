@@ -8,16 +8,29 @@
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя 1
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["Последние статьи"],["Картинка"],["Гифка"]]; //Клавиатура
+    $keyboard = [["Последние статьи"],["Картинка"],["Гифка"],["View Hello, world!"]]; //Клавиатура
 
     if($text){
          if ($text == "/start") {
             $reply = "Добро пожаловать в бота!";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+        }elseif ($text == "/sayhello") {
+            $reply = "Hello, world!";
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+        }elseif ($text == "/sayhelloforperson") {
+            if (isset($result["username"]))
+            {
+              $reply = "Hello, world, ".$result["username"]."!";
+              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
+            }else 
+            {
+              $reply = "Привет незнакомец!";
+              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            }
         }elseif ($text == "/help") {
             $reply = "Информация с помощью.";
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
         }elseif ($text == "Картинка") {
             $url = "https://68.media.tumblr.com/6d830b4f2c455f9cb6cd4ebe5011d2b8/tumblr_oj49kevkUz1v4bb1no1_500.jpg";
             $telegram->sendPhoto([ 'chat_id' => $chat_id, 'photo' => $url, 'caption' => "Описание." ]);
