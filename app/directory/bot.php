@@ -71,8 +71,10 @@
               $info = curl_getinfo($ch);
               //Выводим какую-то инфомрацию
               $currentMessage = "Запрос выполнился за  ".$info['total_time'].' сек. к URL: '.$info['url'];
+              $result = json_decode($info);
+              $textJson = $result->captchaResult;
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $currentMessage ]);
-              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $output ]);
+              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $textJson ]);
         }else{
         	$reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
         	$telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
