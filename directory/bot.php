@@ -26,7 +26,7 @@
         curl_setopt($ch, CURLOPT_HEADER, 0);
       
         $output = curl_exec($ch);
-        if ($output === FALSE) 
+        if($output === FALSE) 
         {
             $textJson = "cURL Error: ".curl_error($ch);
         }
@@ -34,7 +34,7 @@
         $textJson = getFormatedJson($output);
          
         $info = curl_getinfo($ch);
-        if ($info === FALSE) 
+        if($info === FALSE) 
         {
             $responseInfo = "cURL Error: ".curl_error($ch);
         }
@@ -45,10 +45,10 @@
       
         curl_close($ch);
         
-        if ($keyParametr === "info")
+        if($keyParametr === "info")
         {
             return $responseInfo;
-        }elseif ($keyParametr === "json")
+        }elseif($keyParametr === "json")
         {
             return $textJson;
         }
@@ -57,8 +57,8 @@
     
     if($text){
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text ]);
-        if ($text == "/start") {
-          if (isset($name))
+        if($text == "/start") {
+          if(isset($name))
           {
               $reply = "Добро пожаловать в бота, ".$name."!";
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
@@ -67,13 +67,14 @@
               $reply = "Добро пожаловать в бота, незнакомец!";
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
           }
-        }elseif ($text == "Список команд") {
+        }elseif($text == "Список команд") {
             $reply = "Информация с помощью.";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
-        }elseif ($text == "/check") { //($separatedText[0] === "/check") {
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Test" ]);
-            /*array_shift($separatedText);
-            /foreach ($separatedText as $currentUrl)
+        }elseif($separatedText[0] == "/check") {
+            array_shift($separatedText);
+            
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $separatedText[0] ]);
+            /*foreach($separatedText as $currentUrl)
             {
                 if(substr($currentUrl, 8) === "https://")  
                 {
@@ -82,7 +83,7 @@
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 }
             }*/
-        }elseif ($text == "Ping API") {
+        }elseif($text == "Ping API") {
             $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
             $reply = getResponseApi($urlForPingApi, "info");
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
