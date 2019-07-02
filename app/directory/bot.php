@@ -57,22 +57,22 @@
     }
     
     if($text){
-         if ($text == "/start") {
-            if (isset($name))
-            {
-              $reply = "Добро пожаловать в бота, ".$name."!";
-              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
-            }else 
-            {
-              $reply = "Добро пожаловать в бота, незнакомец!";
-              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            }
+        if ($text == "/start") {
+          if (isset($name))
+          {
+            $reply = "Добро пожаловать в бота, ".$name."!";
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
+          }else 
+          {
+            $reply = "Добро пожаловать в бота, незнакомец!";
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+          }
         }elseif ($text == "Список команд") {
             $reply = "Информация с помощью.";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
         }elseif ($separatedText[0] == "/check") {
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => count($separatedText) ]);
             array_shift($separatedText);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => count($separatedText) ]);
             foreach ($separatedText as $currentUrl)
             {
               $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
