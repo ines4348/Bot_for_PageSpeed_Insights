@@ -32,7 +32,6 @@
         }
         else
         {
-            return "Test";
             $textJson = getFormatedJson($output);
         }
         
