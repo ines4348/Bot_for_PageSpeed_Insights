@@ -13,9 +13,10 @@
     
     function getFormatedJson($responseJson):string
     {
-        $temp = json_decode($responseJson);
+        /*$temp = json_decode($responseJson);
         $textJson = json_encode($temp, JSON_PRETTY_PRINT);
-        return $textJson;
+        return $textJson;*/
+        return "getFormatedJson";
     }
     
     function getResponseApi($urlApi, $keyParametr): string
