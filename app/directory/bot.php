@@ -19,7 +19,6 @@
     
     function getResponseApi($urlApi, $keyParametr): string
     {
-        return $urlApi;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlApi);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -28,30 +27,28 @@
         $output = curl_exec($ch);
         if ($output === FALSE) 
         {
-          $textJson = "cURL Error: ".curl_error($ch);
+            $textJson = "cURL Error: ".curl_error($ch);
         }
         $textJson = getFormatedJson($output);
          
         $info = curl_getinfo($ch);
         if ($info === FALSE) 
         {
-          $responseInfo = "cURL Error: ".curl_error($ch);
+            $responseInfo = "cURL Error: ".curl_error($ch);
         }
         else
         {
-          $responseInfo = "Запрос выполнился за  ".$info['total_time'].' сек. к URL: '.$info['url'];
+            $responseInfo = "Запрос выполнился за  ".$info['total_time'].' сек. к URL: '.$info['url'];
         }
       
         curl_close($ch);
         
         if ($keyParametr === "info")
         {
-          //return $responseInfo;
-          return "Test";
+            return $responseInfo;
         }elseif ($keyParametr === "json")
         {
-          //return $textJson;
-          return "TEst2";
+            return $textJson;
         }
         
     }
@@ -74,9 +71,9 @@
             array_shift($separatedText);
             foreach ($separatedText as $currentUrl)
             {
-              $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
-              $reply = getResponseApi($urlForPingApi, "json");
-              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+                $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
+                $reply = getResponseApi($urlForPingApi, "json");
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }
         }elseif ($text == "Ping API") {
             $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
