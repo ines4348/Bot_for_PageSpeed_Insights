@@ -69,7 +69,7 @@
         }elseif ($text == "Список команд") {
             $reply = "Информация с помощью.";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
-        }elseif ($text == "/check") { //($separatedText[0] == "/check") {
+        }elseif ($text === "/check") { //($separatedText[0] === "/check") {
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Test" ]);
             /*array_shift($separatedText);
             /foreach ($separatedText as $currentUrl)
