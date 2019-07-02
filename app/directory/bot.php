@@ -14,7 +14,7 @@
     function getFormatedJson($responseJson):string
     {
         $textJson = json_encode($responseJson, JSON_PRETTY_PRINT);
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => "getFormatedJson" ]);    
+            
         return $textJson;
     }
     
@@ -30,6 +30,7 @@
         {
             $textJson = "cURL Error: ".curl_error($ch);
         }
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $urlApi ]);
         $textJson = getFormatedJson($output);
          
         $info = curl_getinfo($ch);
@@ -72,9 +73,12 @@
             array_shift($separatedText);
             foreach ($separatedText as $currentUrl)
             {
-                $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
-                $reply = getResponseApi($urlForPingApi, "json");
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+                if(substr($currentUrl, 8) === "https://")  
+                {
+                    $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
+                    $reply = getResponseApi($urlForPingApi, "json");
+                    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+                }
             }
         }elseif ($text == "Ping API") {
             $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
