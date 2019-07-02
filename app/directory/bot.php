@@ -24,16 +24,14 @@
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         $output = curl_exec($ch);
-        curl_close($ch);
+        
         if ($output === FALSE) 
         {
-          $errorMessage = "cURL Error: ".curl_error($ch);
-          return $errorMessage;
+          $output = "cURL Error: ".curl_error($ch);
         }
-        else
-        {
-          return $output;
-        }
+      
+        curl_close($ch);
+        return $output;
     }
     
     function getApiResponseInfo($urlApi):string
@@ -43,16 +41,14 @@
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         $info = curl_getinfo($ch);
-        curl_close($ch);
+        
         if ($info === FALSE) 
         {
-          $errorMessage = "cURL Error: ".curl_error($ch);
-          return $errorMessage;
+          $info = "cURL Error: ".curl_error($ch);
         }
-        else
-        {
-          return $info;
-        }
+      
+        curl_close($ch);
+        return $info;
     }
     
     if($text){
