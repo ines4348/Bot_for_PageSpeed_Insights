@@ -17,7 +17,7 @@
       return $textJson;
     }
     
-    function getResponseApi($urlApi, $keyParametr): mixed
+    function getResponseApi($urlApi, $keyParametr): string
     {
         return $urlApi;
         $ch = curl_init();
