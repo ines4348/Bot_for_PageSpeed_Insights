@@ -13,7 +13,7 @@
     
     function getFormatedJson($responseJson):string
     {
-      $jsonDecode = json_encode($responseJson, JSON_PRETTY_PRINT);
+      $textJson = json_encode($responseJson, JSON_PRETTY_PRINT);
       return $textJson;
     }
     
