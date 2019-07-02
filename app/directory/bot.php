@@ -17,7 +17,7 @@
       return $textJson;
     }
     
-    function getApiResponse($urlApi):string
+    function getResponseApi($urlApi): mixed
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlApi);
@@ -34,7 +34,7 @@
         return $output;
     }
     
-    function getApiResponseInfo($urlApi):string
+    function getResponseApiInfo($urlApi):string
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlApi);
@@ -88,13 +88,13 @@
             foreach ($separatedText as $currentUrl)
             {
               $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
-              $responseJson = getApiResponse($urlForPingApi);
+              $responseJson = getResponseApi($urlForPingApi);
               $reply = getFormatedJson($responseJson);
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }
         }elseif ($text == "Ping API") {
-            $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://ispring.ru&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
-            $responseApiInfo = getApiResponseInfo($urlForPingApi);
+            $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
+            $responseApiInfo = getResponseApiInfo($urlForPingApi);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $responseApiInfo ]);
         }else{
         	$reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
