@@ -33,7 +33,8 @@
         }
         else
         {
-            $textJson = getFormatedJson($output);
+            //$textJson = getFormatedJson($output);
+            $textJson = json_encode($output, JSON_PRETTY_PRINT);
         }
         
          
