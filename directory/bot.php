@@ -75,7 +75,8 @@
             
             foreach($separatedText as $currentUrl)
             {
-                
+                $test = substr($currentUrl, 8);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $test ]);
                 if(substr($currentUrl, 8) === "https://")  
                 {
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $currentUrl ]);
