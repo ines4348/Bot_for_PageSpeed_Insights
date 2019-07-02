@@ -24,6 +24,7 @@
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         $output = curl_exec($ch);
+        curl_close($ch);
         if ($output === FALSE) 
         {
           $errorMessage = "cURL Error: ".curl_error($ch);
@@ -33,7 +34,6 @@
         {
           return $output;
         }
-        curl_close($ch);
     }
     
     function getApiResponseInfo($urlApi):string
@@ -43,6 +43,7 @@
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         $info = curl_getinfo($ch);
+        curl_close($ch);
         if ($info === FALSE) 
         {
           $errorMessage = "cURL Error: ".curl_error($ch);
@@ -52,7 +53,6 @@
         {
           return $info;
         }
-        curl_close($ch);
     }
     
     if($text){
@@ -95,7 +95,7 @@
             $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com";
             $responseApiInfo = getApiResponseInfo($urlForPingApi);
             $currentMessage = "Запрос выполнился за  ".$responseApiInfo['total_time'].' сек. к URL: '.$responseApiInfo['url'];
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $currentMessage ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text ]);
         }else{
         	$reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
         	$telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
