@@ -19,7 +19,7 @@
     }
     
     function getResponseApi($urlApi, $keyParametr): string
-    {
+    {return $urlApi." ".$keyParametr;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlApi);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -30,7 +30,7 @@
         {
             $textJson = "cURL Error: ".curl_error($ch);
         }
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $urlApi ]);
+        
         $textJson = getFormatedJson($output);
          
         $info = curl_getinfo($ch);
