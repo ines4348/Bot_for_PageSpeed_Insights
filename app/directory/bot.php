@@ -14,7 +14,10 @@
     function getFormatedJson($responseJson):string
     {
       $jsonDecode = json_decode($responseJson);
-      $textJson = "Chrome User Experience Report Results<br/>First Contentful Paint: ".$jsonDecode->FIRST_CONTENTFUL_PAINT_MS->category."<br/>".$jsonDecode->FIRST_INPUT_DELAY_MS->category;
+      $firstContentfulPaintMs = $jsonDecode->FIRST_CONTENTFUL_PAINT_MS->category;
+      $firstInputDelayMs = $jsonDecode->FIRST_INPUT_DELAY_MS->category;
+      $textJson = "Chrome User Experience Report Results<br/>".$firstContentfulPaintMs."First Contentful Paint: ".$firstInputDelayMs."<br/>";
+      return $textJson;
     }
     
     function getApiResponse($urlApi):string
