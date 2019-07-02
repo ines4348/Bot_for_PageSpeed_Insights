@@ -56,7 +56,7 @@
     }
     
     if($text){
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text ]);
+        //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text ]);
         if($text == "/start") {
           if(isset($name))
           {
@@ -75,9 +75,10 @@
             
             foreach($separatedText as $currentUrl)
             {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $currentUrl ]);
+                
                 if(substr($currentUrl, 8) === "https://")  
                 {
+                    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $currentUrl ]);
                     /*$urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
                     $reply = getResponseApi($urlForPingApi, "json");
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);*/
