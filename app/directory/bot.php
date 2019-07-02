@@ -71,6 +71,7 @@
             $reply = "Информация с помощью.";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
         }elseif ($separatedText[0] == "/check") {
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => count($separatedText) ]);
             array_shift($separatedText);
             foreach ($separatedText as $currentUrl)
             {
