@@ -13,8 +13,9 @@
     
     function getFormatedJson($responseJson):string
     {
-      $textJson = json_encode($responseJson, JSON_PRETTY_PRINT);
-      return $textJson;
+        $textJson = json_encode($responseJson, JSON_PRETTY_PRINT);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => "getFormatedJson" ]);    
+        return $textJson;
     }
     
     function getResponseApi($urlApi, $keyParametr): string
