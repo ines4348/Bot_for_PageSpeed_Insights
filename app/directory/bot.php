@@ -70,10 +70,11 @@
         }elseif($text == "Список команд") {
             $reply = "Информация с помощью.";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
-        }elseif($separatedText[0] === "/check") {
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Test" ]);
-            /*array_shift($separatedText);
-            /foreach($separatedText as $currentUrl)
+        }elseif($separatedText[0] == "/check") {
+            array_shift($separatedText);
+            
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $separatedText[0] ]);
+            /*foreach($separatedText as $currentUrl)
             {
                 if(substr($currentUrl, 8) === "https://")  
                 {
