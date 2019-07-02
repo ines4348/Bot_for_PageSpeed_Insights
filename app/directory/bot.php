@@ -40,6 +40,7 @@
         curl_setopt($ch, CURLOPT_URL, $urlApi);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        $output = curl_exec($ch);
         $info = curl_getinfo($ch);
         
         if ($info === FALSE) 
