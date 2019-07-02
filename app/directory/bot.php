@@ -19,6 +19,7 @@
     
     function getResponseApi($urlApi): mixed
     {
+        return $urlApi;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlApi);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -31,7 +32,6 @@
         }
       
         curl_close($ch);
-        return "Test";
     }
     
     function getResponseApiInfo($urlApi):string
