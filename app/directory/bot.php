@@ -56,6 +56,7 @@
     }
     
     if($text){
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text ]);
         if ($text == "/start") {
           if (isset($name))
           {
@@ -69,9 +70,10 @@
         }elseif ($text == "Список команд") {
             $reply = "Информация с помощью.";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
-        }elseif ($separatedText[0] == "/check") {
-            array_shift($separatedText);
-            foreach ($separatedText as $currentUrl)
+        }elseif ($text == "/check") { //($separatedText[0] === "/check") {
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Test" ]);
+            /*array_shift($separatedText);
+            /foreach ($separatedText as $currentUrl)
             {
                 if(substr($currentUrl, 8) === "https://")  
                 {
@@ -79,7 +81,7 @@
                     $reply = getResponseApi($urlForPingApi, "json");
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 }
-            }
+            }*/
         }elseif ($text == "Ping API") {
             $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
             $reply = getResponseApi($urlForPingApi, "info");
