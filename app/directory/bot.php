@@ -14,7 +14,7 @@
     function getFormatedJson($responseJson):string
     {
       $jsonDecode = json_decode($responseJson);
-      $textJson = "Chrome User Experience Report Results<br/>First Contentful Paint: ".$jsonDecode->FIRST_CONTENTFUL_PAINT_MS->category."<br/>"..$jsonDecode->FIRST_INPUT_DELAY_MS->category;
+      $textJson = "Chrome User Experience Report Results<br/>First Contentful Paint: ".$jsonDecode->FIRST_CONTENTFUL_PAINT_MS->category."<br/>".$jsonDecode->FIRST_INPUT_DELAY_MS->category;
     }
     
     function getApiResponse($urlApi):string
