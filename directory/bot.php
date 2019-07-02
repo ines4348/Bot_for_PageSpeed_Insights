@@ -14,12 +14,11 @@
     function getFormatedJson($responseJson):string
     {
         $textJson = json_encode($responseJson, JSON_PRETTY_PRINT);
-            
         return $textJson;
     }
     
     function getResponseApi($urlApi, $keyParametr): string
-    {return $urlApi." ".$keyParametr;
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlApi);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -30,8 +29,11 @@
         {
             $textJson = "cURL Error: ".curl_error($ch);
         }
+        else
+        {
+            $textJson = getFormatedJson($output);
+        }
         
-        $textJson = getFormatedJson($output);
          
         $info = curl_getinfo($ch);
         if($info === FALSE) 
