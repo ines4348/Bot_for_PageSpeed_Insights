@@ -44,11 +44,15 @@
         
         if ($info === FALSE) 
         {
-          $info = "cURL Error: ".curl_error($ch);
+          $responseInfo = "cURL Error: ".curl_error($ch);
+        }
+        else
+        {
+          $responseInfo = "Запрос выполнился за  ".$info['total_time'].' сек. к URL: '.$info['url'];
         }
       
         curl_close($ch);
-        return $info;
+        return $responseInfo;
     }
     
     if($text){
@@ -90,8 +94,7 @@
         }elseif ($text == "Ping API") {
             $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com";
             $responseApiInfo = getApiResponseInfo($urlForPingApi);
-            $currentMessage = "Запрос выполнился за  ".$responseApiInfo['total_time'].' сек. к URL: '.$responseApiInfo['url'];
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $responseApiInfo ]);
         }else{
         	$reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
         	$telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
