@@ -17,32 +17,22 @@
       return $textJson;
     }
     
-    function getResponseApi($urlApi): mixed
+    function getResponseApi($urlApi, $keyParametr): mixed
     {
         return $urlApi;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlApi);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+      
         $output = curl_exec($ch);
-        
         if ($output === FALSE) 
         {
-          $output = "cURL Error: ".curl_error($ch);
+          $textJson = "cURL Error: ".curl_error($ch);
         }
-      
-        curl_close($ch);
-    }
-    
-    function getResponseApiInfo($urlApi):string
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $urlApi);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        $output = curl_exec($ch);
+        $textJson = getFormatedJson($output);
+         
         $info = curl_getinfo($ch);
-        
         if ($info === FALSE) 
         {
           $responseInfo = "cURL Error: ".curl_error($ch);
@@ -53,7 +43,15 @@
         }
       
         curl_close($ch);
-        return $responseInfo;
+        
+        if ($keyParametr === "info")
+        {
+          return $responseInfo;
+        }elseif ($keyParametr === "json")
+        {
+          return $textJson;
+        }
+        
     }
     
     if($text){
@@ -75,14 +73,13 @@
             foreach ($separatedText as $currentUrl)
             {
               $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
-              $responseJson = getResponseApi($urlForPingApi);
-              $reply = getFormatedJson($responseJson);
+              $reply = getResponseApi($urlForPingApi, "json");
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }
         }elseif ($text == "Ping API") {
             $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
-            $responseApiInfo = getResponseApiInfo($urlForPingApi);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $responseApiInfo ]);
+            $reply = getResponseApi($urlForPingApi, "info");
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }else{
         	$reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
         	$telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
