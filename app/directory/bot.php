@@ -71,12 +71,11 @@
             $reply = "Информация с помощью.";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
         }elseif ($separatedText[0] == "/check") {
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $separatedText[0] ]);
             array_shift($separatedText);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $separatedText[0] ]);
             foreach ($separatedText as $currentUrl)
             {
               $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs";
+              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $urlForPingApi ]);
               $responseJson = getResponseApi($urlForPingApi);
               $reply = getFormatedJson($responseJson);
               $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
