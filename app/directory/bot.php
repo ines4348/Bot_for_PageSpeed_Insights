@@ -13,10 +13,7 @@
     
     function getFormatedJson($responseJson):string
     {
-      $jsonDecode = json_decode($responseJson);
-      $firstContentfulPaintMs = $jsonDecode->FIRST_CONTENTFUL_PAINT_MS->category;
-      $firstInputDelayMs = $jsonDecode->FIRST_INPUT_DELAY_MS->category;
-      $textJson = "Chrome User Experience Report Results<br/>".$firstContentfulPaintMs."First Contentful Paint: ".$firstInputDelayMs."<br/>";
+      $jsonDecode = json_encode($responseJson, JSON_PRETTY_PRINT);
       return $textJson;
     }
     
