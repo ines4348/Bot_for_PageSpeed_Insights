@@ -46,10 +46,12 @@
         
         if ($keyParametr === "info")
         {
-          return $responseInfo;
+          //return $responseInfo;
+          return "Test";
         }elseif ($keyParametr === "json")
         {
-          return $textJson;
+          //return $textJson;
+          return "TEst2";
         }
         
     }
@@ -58,12 +60,12 @@
         if ($text == "/start") {
           if (isset($name))
           {
-            $reply = "Добро пожаловать в бота, ".$name."!";
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
+              $reply = "Добро пожаловать в бота, ".$name."!";
+              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
           }else 
           {
-            $reply = "Добро пожаловать в бота, незнакомец!";
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+              $reply = "Добро пожаловать в бота, незнакомец!";
+              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
           }
         }elseif ($text == "Список команд") {
             $reply = "Информация с помощью.";
