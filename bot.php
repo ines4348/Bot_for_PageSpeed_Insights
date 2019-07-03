@@ -34,9 +34,9 @@
     $result = $telegram -> getWebhookUpdates(); 
     $text = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::TEXT]; 
     $separatedText = explode(" ", $text);
-    $chat_id = $result["message"]["chat"]["id"]; 
-    $name = $result["message"]["from"]["username"]; 
-    $keyboard = [["Последние статьи"],["Картинка"],["Гифка"]]; 
+    $chat_id = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::CHAT][TelegramCommandKey::ID]; 
+    $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
+    $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; 
 
  /*   
     $telegram = new Api(BOT_KEY); 
