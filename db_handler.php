@@ -30,7 +30,7 @@
     mysqli_query($db, "SET COLLATION_CONNECTION='utf8_general_ci'"); 
     setlocale(LC_ALL,"ru_RU.UTF8");
 
-    function create_user($name, $chat_id)
+    function create_user($chat_id, $name)
     {
         global $db;
         $name = mysqli_real_escape_string($name);
