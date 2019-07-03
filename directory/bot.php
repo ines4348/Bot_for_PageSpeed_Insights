@@ -22,7 +22,7 @@
         const ID = "id";
         const FROM = "from";
         const USERNAME = "username";
-        const PARSE_MODE = "parse_mode"
+        const PARSE_MODE = "parse_mode";
         const HTML = "HTML";
     }
     
