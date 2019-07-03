@@ -16,7 +16,7 @@
     global $db;
     $db = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD) or die();
 
-    mysqli_select_db(DB_NAME, $db) or die();
+    mysqli_select_db($db, DB_NAME) or die();
 
     mysqli_query("SET NAMES utf8", $db);
     mysqli_query("SET CHARACTER SET utf8", $db);
