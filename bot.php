@@ -53,26 +53,25 @@
 
     function analyzeMessage($text, $welcomeMessage, $separatedText)
     {
-        if($text){
-            if($text == COMMAND_START)
+        if($text == COMMAND_START)
+        {
+            $reply = $welcomeMessage; 
+        }elseif($text == COMMAND_HELP)
+        {
+            $reply = LIST_COMMAND;           
+        }elseif($separatedText[0] == COMMAND_CHECK)
+        {
+            $delItem = array_shift($separatedText);
+            foreach($separatedText as $currentUrl)
             {
-                $reply = $welcomeMessage; 
-            }elseif($text == COMMAND_HELP)
-            {
-                $reply = LIST_COMMAND;           
-            }elseif($separatedText[0] == COMMAND_CHECK)
-            {
-                $delItem = array_shift($separatedText);
-                foreach($separatedText as $currentUrl)
+                if(substr($currentUrl, 0, 8) == CONDITION_FOR_URL)  
                 {
-                    if(substr($currentUrl, 0, 8) == CONDITION_FOR_URL)  
-                    {
-                        $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
-                        $reply = getResponseApi($urlForPingApi);
-                    }
+                    $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
+                    $reply = getResponseApi($urlForPingApi);
                 }
             }
-        }else{
+        }
+        else{
             $reply = COMMAND_NOT_FOUND;
         }
         return $reply;
