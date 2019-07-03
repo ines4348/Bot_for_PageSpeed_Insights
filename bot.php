@@ -9,7 +9,7 @@
     const COMMAND_HELP = "/help";
     const COMMAND_CHECK = "/check";
     const COMMAND_VIEW_LIST_COMMAND = "Список команд";
-    const LIST_COMMAND = "/start - начать общение <br/> /check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://";
+    const LIST_COMMAND = "/start - начать общение \n /check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://";
     const URL_API = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={currentUrl}&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs&locale=RU";
     const BOT_KEY = '831949384:AAEdN3KQz00sMaFto2yLotRGETTFmw_dk7c';
     const CONDITION_FOR_URL = "https://";
