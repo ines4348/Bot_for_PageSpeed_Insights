@@ -1,6 +1,6 @@
 <?php
-    include('vendor/autoload.php'); //Подключаем библиотеку
-    include("pagespeed_api.php"); //Подключаем библиотеку
+    require_once ('vendor/autoload.php'); //Подключаем библиотеку
+    require_once ("pagespeed_api.php"); //Подключаем библиотеку
 
     const WELCOME_USER = "Добро пожаловать в бота, {name}!"; 
     const WELCOME_INCOGNIT = "Добро пожаловать в бота, незнакомец!";
