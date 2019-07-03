@@ -74,7 +74,7 @@ return $currentUrl;
    /*$telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::PARSE_MODE => TelegramCommandKey::HTML, TelegramCommandKey::MESSAGE => analyzeMessage($text)]);*/
    if($text){
        $temp=analyzeMessage($text);
-       $telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::PARSE_MODE => TelegramCommandKey::HTML, TelegramCommandKey::MESSAGE => $temp ]);
+       $telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::MESSAGE => $temp ]);
    }
 ?>
 
