@@ -5,6 +5,8 @@
     const DB_PASSWORD = "36da8d02";
     const DB_NAME = "heroku_7fe864cef8db15a";
     const SQL_INSERT = "insert into {table_name} ({column_name}) values({values})";
+    const DATE_FORMAT = "y.m.d";
+    const SEPARATOR = "', '";
 
     class dbColumnName {
         const CHAT_ID = 'chat_id';
@@ -33,14 +35,25 @@
         return $db;
     }
 
+    function is_user_set($name)
+    {
+        $db = create_db_connect();
+        $name = mysqli_real_escape_string($db, $name);
+        $result = mysqli_query($db, "select * from `user` where name='$name' LIMIT 1");
+        mysqli_close($db);
+        if(mysqli_fetch_array($result) !== false) return true;
+        return false;
+    }
+
     function create_user($chat_id, $name)
     {
         $db = create_db_connect();
         $name = mysqli_real_escape_string($db, $name);
         $chat_id = mysqli_real_escape_string($db, $chat_id);
+        
         $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
-        $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . ', ' . dbColumnName::USERNAME . ', ' . dbColumnName::CREATE_DATA, $query_replase_table);
-        $query = str_replace("{values}", "'" . $chat_id . "', '" . $name . "', '" . date("y.m.d") . "'", $query_replase_column);
+        $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . SEPARATOR . dbColumnName::USERNAME . SEPARATOR . dbColumnName::CREATE_DATA, $query_replase_table);
+        $query = str_replace("{values}", "'" . $chat_id . SEPARATOR . $name . SEPARATOR . date(DATE_FORMAT) . "'", $query_replase_column);
         mysqli_query($db, $query) or die();
         mysqli_close($db);
         return "Пользователь добавлен";
