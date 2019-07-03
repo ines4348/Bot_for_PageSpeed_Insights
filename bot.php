@@ -63,7 +63,7 @@
 
     function sendMessageToChat($telegram, $chat_id, $reply)
     {
-        $telegram -> sendMessage([TelegramCommandKey.CHAT_ID => $chat_id, TelegramCommandKey.PARSE_MODE => TelegramCommandKey.HTML, TelegramCommandKey.TEXT_MESSAGE => $reply]);
+        $telegram->sendMessage([TelegramCommandKey.CHAT_ID => $chat_id, TelegramCommandKey.PARSE_MODE => TelegramCommandKey.HTML, TelegramCommandKey.TEXT_MESSAGE => $reply]);
         return;
     }
     
