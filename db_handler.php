@@ -40,8 +40,8 @@
         $chat_id = mysqli_real_escape_string($db, $chat_id);
         $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
         $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . ', ' . dbColumnName::USERNAME . ', ' . dbColumnName::CREATE_DATA, $query_replase_table);
-        $query = str_replace("{values}", "'" . $chat_id . "', '" . $name . "', '" . date("m.d.y") . "'", $query_replase_column);return "Пользователь добавлен";
-        mysqli_query($db, $query) or die();
+        $query = str_replace("{values}", "'" . $chat_id . "', '" . $name . "', '" . date("m.d.y") . "'", $query_replase_column);
+        mysqli_query($db, $query) or die();return "Пользователь добавлен";
         mysqli_close($db);
         
     }
