@@ -1,97 +1,118 @@
 <?php
     include('../vendor/autoload.php'); //Подключаем библиотеку
-    use Telegram\Bot\Api; 
-    $telegram = new Api('831949384:AAEdN3KQz00sMaFto2yLotRGETTFmw_dk7c'); //Устанавливаем токен, полученный у BotFather
-    $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
-    
-    $text = $result["message"]["text"]; //Текст сообщения
-    $separatedText = explode(" ", $text);
-    $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя 1
-    $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["Список команд"],["Ping API"],["Получить ответ от API"]]; //Клавиатура
+    include("pagespeed_api.php"); //Подключаем библиотеку
 
-    
-    function getFormatedJson($responseJson):string
-    {
-        $textJson = json_decode($responseJson);
-        $textResult = "Производительность: ".$textJson->lighthouseResult->categories->performance->score;
-        return $textResult;
+    const WELCOME_USER = "Добро пожаловать в бота, {name}!"; 
+    const WELCOME_INCOGNIT = "Добро пожаловать в бота, незнакомец!";
+    const COMMAND_START = "/start";
+    const COMMAND_HELP = "/help";
+    const COMMAND_CHECK = "/check";
+    const COMMAND_VIEW_LIST_COMMAND = "Список команд";
+    const LIST_COMMAND = "/start - начать общение <br/> /check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://";
+    const URL_API = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={currentUrl}&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs&locale=RU";
+    const BOT_KEY = '831949384:AAEdN3KQz00sMaFto2yLotRGETTFmw_dk7c';
+    const CONDITION_FOR_URL = "https://";
+    const COMMAND_NOT_FOUND = "По запросу \"<b>"{text}"</b>\" ничего не найдено.";
+
+    class TelegramCommandKey {
+        const CHAT_ID = "chat_id";
+        const MESSAGE = "message";
+        const TEXT = "text";
+        const CHAT = "chat";
+        const ID = "id";
+        const FROM = "from";
+        const USERNAME = "username";
+        const PARSE_MODE = "parse_mode"
+        const HTML = "HTML";
     }
     
-    function getResponseApi($urlApi, $keyParametr): string
+    
+    use Telegram\Bot\Api; 
+    $telegram = new Api(BOT_KEY); //Устанавливаем токен, полученный у BotFather
+    $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
+    $text = $result[TelegramCommandKey.MESSAGE][TelegramCommandKey.TEXT]; //Текст сообщения
+    $separatedText = explode(" ", $text);
+    $chat_id = $result[TelegramCommandKey.MESSAGE][TelegramCommandKey.CHAT][ID]; //Уникальный идентификатор пользователя 1
+    $name = $result[TelegramCommandKey.MESSAGE][FROM][USERNAME]; //Юзернейм пользователя
+    $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; //Клавиатура
+
+    $welcomeMessage = str_replace("{name}", $name, WELCOME_USER);
+
+    function getTextMessage(): string
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $urlApi);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-      
-        $output = curl_exec($ch);
-        if($output === FALSE) 
-        {
-            $textJson = "cURL Error: ".curl_error($ch);
-        }
-        else
-        {
-            $textJson = getFormatedJson($output);
-        }
-        
-         
-        $info = curl_getinfo($ch);
-        if($info === FALSE) 
-        {
-            $responseInfo = "cURL Error: ".curl_error($ch);
-        }
-        else
-        {
-            $responseInfo = "Запрос выполнился за  ".$info['total_time'].' сек. к URL: '.$info['url'];
-        }
-      
-        curl_close($ch);
-        
-        if($keyParametr === "info")
-        {
-            return $responseInfo;
-        }elseif($keyParametr === "json")
-        {
-            return $textJson;
-        }
+        return $text;
+    }
+
+    function getChatIdMessage(): string
+    {
+        return $chat_id;
+    }
+
+    function getUsername(): string
+    {
+        return $name;
+    }
+
+    function getKeyboard(): string
+    {
+        return $keyboard;
+    }
+
+    function sendMessageToChat($telegram, $chat_id, $reply)
+    {
+        $telegram -> sendMessage([TelegramCommandKey.CHAT_ID => $chat_id, TelegramCommandKey.PARSE_MODE => TelegramCommandKey.HTML, TelegramCommandKey.TEXT_MESSAGE => $reply]);
+        return;
     }
     
-    if($text){
-        if($text == "/start") {
-          if(isset($name))
-          {
-              $reply = "Добро пожаловать в бота, ".$name."!";
-              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]); 
-          }else 
-          {
-              $reply = "Добро пожаловать в бота, незнакомец!";
-              $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-          }
-        }elseif($text == "Список команд") {
-            $reply = "Информация с помощью.";
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);           
-        }elseif($separatedText[0] == "/check") {
-            $delItem = array_shift($separatedText);
-            
-            foreach($separatedText as $currentUrl)
-            {
-                if(substr($currentUrl, 0, 8) === "https://")  
+    function analyzeMessage($text)
+    {
+        if($text){
+            if($text == COMMAND_START) {
+                if(isset($name))
                 {
-                    $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=".$currentUrl."&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs&locale=RU";
-                    $reply = getResponseApi($urlForPingApi, "json");
-                    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+                    sendMessageToChat($telegram, $chat_id, $welcomeMessage); 
+                }else 
+                {
+                    sendMessageToChat($telegram, $chat_id, WELCOME_INCOGNIT);
+                }
+            }elseif($text == COMMAND_HELP) {
+                sendMessageToChat($telegram, $chat_id, LIST_COMMAND);           
+            }elseif($separatedText[0] == COMMAND_CHECK) {
+                $delItem = array_shift($separatedText);
+                foreach($separatedText as $currentUrl)
+                {
+                    if(substr($currentUrl, 0, 8) == CONDITION_FOR_URL)  
+                    {
+                        $urlForPingApi = URL_API;
+                        $reply = getResponseApi($urlForPingApi);
+                        sendMessageToChat($telegram, $chat_id, $reply);
+                    }
                 }
             }
-        }elseif($text == "Ping API") {
-            $urlForPingApi = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://developers.google.com&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs&locale=RU";
-            $reply = getResponseApi($urlForPingApi, "info");
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }else{
-        	$reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
-        	$telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
+            $reply = COMMAND_NOT_FOUND;
+            sendMessageToChat($telegram, $chat_id, $reply);
         }
-    }else{
-    	$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
+        return;
     }
+
+    analyzeMessage($text);
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
