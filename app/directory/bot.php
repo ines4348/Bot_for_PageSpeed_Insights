@@ -12,7 +12,7 @@
     const URL_API = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={currentUrl}&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs&locale=RU";
     const BOT_KEY = '831949384:AAEdN3KQz00sMaFto2yLotRGETTFmw_dk7c';
     const CONDITION_FOR_URL = "https://";
-    const COMMAND_NOT_FOUND = "По запросу \"<b>"{text}"</b>\" ничего не найдено.";
+    const COMMAND_NOT_FOUND = "По запросу \"<b>{text}</b>\" ничего не найдено.";
 
     class TelegramCommandKey {
         const CHAT_ID = "chat_id";
