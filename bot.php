@@ -1,7 +1,7 @@
 <?php
 
-    require_once ('vendor/autoload.php'); //Подключаем библиотеку
-    require_once ("pagespeed_api.php"); //Подключаем библиотеку
+    require_once('vendor/autoload.php');
+    require_once("pagespeed_api.php"); 
 
     const WELCOME_USER = "Добро пожаловать в бота, {name}!"; 
     const WELCOME_INCOGNIT = "Добро пожаловать в бота, незнакомец!";
@@ -70,6 +70,7 @@
                     if(substr($currentUrl, 0, 8) == CONDITION_FOR_URL)  
                     {
                         $urlForPingApi = URL_API;
+return $currentUrl;
                         $reply = getResponseApi($urlForPingApi);
                     }
                 }
