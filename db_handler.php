@@ -28,11 +28,11 @@
 
 
 
-function createNewUser()
+/*function createNewUser()
 {
     $data = Array(CHAT_ID  =>  " admin ", USERNAME => " John ", CREATE_DATA => '01.01.2019'); 
     $id = $db -> insert('user', $ data);
-}
+}*/
 ?>
 
 
