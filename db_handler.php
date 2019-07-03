@@ -36,7 +36,7 @@
     }
 
     function is_user_set($name)
-    {
+    {return false;
         $db = create_db_connect();
         $name = mysqli_real_escape_string($db, $name);
         $result = mysqli_query($db, "select * from `user` where name='$name' LIMIT 1");
