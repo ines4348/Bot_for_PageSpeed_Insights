@@ -33,8 +33,8 @@
     function create_user($chat_id, $name)
     {
         global $db;
-        $name = mysqli_real_escape_string($name);
-        $chat_id = mysqli_real_escape_string($chat_id);
+        $name = mysqli_real_escape_string($db, $name);
+        $chat_id = mysqli_real_escape_string($db, $chat_id);
         $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
         $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . ', ' . dbColumnName::USERNAME . ', ' . dbColumnName::CREATE_DATA, $query_replase_table);
         $query = str_replace("{values}", "'" . $chat_id . "', '" . $name . "', '" . date("m.d.y") . "'", $query_replase_column);
