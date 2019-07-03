@@ -14,6 +14,9 @@
     const CONDITION_FOR_URL = "https://";
     const COMMAND_NOT_FOUND = "По запросу \"<b>{text}</b>\" ничего не найдено.";
 
+//const DB_URL mysql://b60754546ea096:36da8d02@us-cdbr-iron-east-02.cleardb.net/heroku_7fe864cef8db15a?reconnect=true
+//const DB_NAME heroku_7fe864cef8db15a
+
     class TelegramCommandKey {
         const CHAT_ID = "chat_id";
         const MESSAGE = "message";
