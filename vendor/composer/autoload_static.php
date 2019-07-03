@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc1519571bda6b18467df38d1006c267e
+class ComposerStaticInit25ae13f30c06d681d5304f13ae104dc7
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -13,8 +13,6 @@ class ComposerStaticInitc1519571bda6b18467df38d1006c267e
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
-        '71ecd0286a4e74fd8732297fb587023c' => __DIR__ . '/..' . '/thingengineer/mysqli-database-class/MysqliDb.php',
-        'd383f1ec7b1e54a09cb53eb6fcf751e0' => __DIR__ . '/..' . '/thingengineer/mysqli-database-class/dbObject.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -81,8 +79,8 @@ class ComposerStaticInitc1519571bda6b18467df38d1006c267e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc1519571bda6b18467df38d1006c267e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc1519571bda6b18467df38d1006c267e::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit25ae13f30c06d681d5304f13ae104dc7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit25ae13f30c06d681d5304f13ae104dc7::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
