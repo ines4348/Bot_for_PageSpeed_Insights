@@ -18,15 +18,15 @@
 //const DB_NAME heroku_7fe864cef8db15a
 
     class TelegramCommandKey {
-        const CHAT_ID = "chat_id";
-        const MESSAGE = "message";
-        const TEXT = "text";
-        const CHAT = "chat";
-        const ID = "id";
-        const FROM = "from";
-        const USERNAME = "username";
-        const PARSE_MODE = "parse_mode";
-        const HTML = "HTML";
+        const CHAT_ID = 'chat_id';
+        const MESSAGE = 'message';
+        const TEXT = 'text';
+        const CHAT = 'chat';
+        const ID = 'id';
+        const FROM = 'from';
+        const USERNAME = 'username';
+        const PARSE_MODE = 'parse_mode';
+        const HTML = 'HTML';
     }
     
     

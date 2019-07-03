@@ -10,24 +10,23 @@
     const COMMAND_VIEW_LIST_COMMAND = "Список команд";
     const LIST_COMMAND = "/start - начать общение <br/> /check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://";
     const URL_API = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={currentUrl}&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs&locale=RU";
-    const BOT_KEY = "831949384:AAEdN3KQz00sMaFto2yLotRGETTFmw_dk7c";
+    const BOT_KEY = '831949384:AAEdN3KQz00sMaFto2yLotRGETTFmw_dk7c';
     const CONDITION_FOR_URL = "https://";
     const COMMAND_NOT_FOUND = "По запросу \"<b>{text}</b>\" ничего не найдено.";
 
 //const DB_URL mysql://b60754546ea096:36da8d02@us-cdbr-iron-east-02.cleardb.net/heroku_7fe864cef8db15a?reconnect=true
 //const DB_NAME heroku_7fe864cef8db15a
 
-    class TelegramCommandKey 
-    {
-        const CHAT_ID = "chat_id";
-        const MESSAGE = "message";
-        const TEXT = "text";
-        const CHAT = "chat";
-        const ID = "id";
-        const FROM = "from";
-        const USERNAME = "username";
-        const PARSE_MODE = "parse_mode";
-        const HTML = "HTML";
+    class TelegramCommandKey {
+        const CHAT_ID = 'chat_id';
+        const MESSAGE = 'message';
+        const TEXT = 'text';
+        const CHAT = 'chat';
+        const ID = 'id';
+        const FROM = 'from';
+        const USERNAME = 'username';
+        const PARSE_MODE = 'parse_mode';
+        const HTML = 'HTML';
     }
     
     
@@ -64,7 +63,7 @@
 
     function sendMessageToChat($telegram, $chat_id, $reply)
     {
-        $telegram -> sendMessage([TelegramCommandKey.CHAT_ID => $chat_id, TelegramCommandKey.PARSE_MODE => TelegramCommandKey.HTML, TelegramCommandKey.MESSAGE => $reply]);
+        $telegram -> sendMessage([TelegramCommandKey.CHAT_ID => $chat_id, TelegramCommandKey.PARSE_MODE => TelegramCommandKey.HTML, TelegramCommandKey.TEXT_MESSAGE => $reply]);
         return;
     }
     
