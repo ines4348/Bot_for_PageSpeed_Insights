@@ -76,7 +76,8 @@
     }
 
    if($text){
-       /*create_user($chat_id, $name);*/
+       $temp = create_user($chat_id, $name);
+       $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp ]);
        $welcomeMessage = setWelcomeMessage($name);
        $temp=analyzeMessage($text, $welcomeMessage, $separatedText);
        $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp ]);

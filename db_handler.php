@@ -21,25 +21,32 @@
     }
 
     global $db;
-    $db = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD) or die();
-
-    mysqli_select_db($db, DB_NAME) or die();
-
-    mysqli_query($db, "SET NAMES utf8");
-    mysqli_query($db, "SET CHARACTER SET utf8");
-    mysqli_query($db, "SET COLLATION_CONNECTION='utf8_general_ci'"); 
-    setlocale(LC_ALL,"ru_RU.UTF8");
+    
+    function create_db_connect()
+    {
+        $db = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD) or die();
+        mysqli_select_db($db, DB_NAME) or die();
+        mysqli_query($db, "SET NAMES utf8");
+        mysqli_query($db, "SET CHARACTER SET utf8");
+        mysqli_query($db, "SET COLLATION_CONNECTION='utf8_general_ci'"); 
+        setlocale(LC_ALL,"ru_RU.UTF8");
+        return $db;
+    }
 
     function create_user($chat_id, $name)
     {
-        global $db;
+        $db = create_db_connect();
         $name = mysqli_real_escape_string($db, $name);
         $chat_id = mysqli_real_escape_string($db, $chat_id);
         $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
         $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . ', ' . dbColumnName::USERNAME . ', ' . dbColumnName::CREATE_DATA, $query_replase_table);
         $query = str_replace("{values}", "'" . $chat_id . "', '" . $name . "', '" . date("m.d.y") . "'", $query_replase_column);
         mysqli_query($db, $query) or die();
+        mysqli_close($db);
+        return "Пользователь добавлен";
     }
+
+    
 ?>
 
 
