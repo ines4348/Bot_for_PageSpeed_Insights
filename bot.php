@@ -33,10 +33,10 @@
     use Telegram\Bot\Api; 
     $telegram = new Api(BOT_KEY); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
-    $text = $result[TelegramCommandKey.MESSAGE][TelegramCommandKey.TEXT]; //Текст сообщения
+    $text = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::TEXT]; //Текст сообщения
     $separatedText = explode(" ", $text);
-    $chat_id = $result[TelegramCommandKey.MESSAGE][TelegramCommandKey.CHAT][ID]; //Уникальный идентификатор пользователя 1
-    $name = $result[TelegramCommandKey.MESSAGE][FROM][USERNAME]; //Юзернейм пользователя
+    $chat_id = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::CHAT][ID]; //Уникальный идентификатор пользователя 1
+    $name = $result[TelegramCommandKey::MESSAGE][FROM][USERNAME]; //Юзернейм пользователя
     $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; //Клавиатура
 
     $welcomeMessage = str_replace("{name}", $name, WELCOME_USER);
@@ -71,7 +71,7 @@
         return $reply;
     }
 
-   $telegram->sendMessage([TelegramCommandKey.CHAT_ID => $chat_id, TelegramCommandKey.PARSE_MODE => TelegramCommandKey.HTML, TelegramCommandKey.TEXT_MESSAGE => analyzeMessage($text)]);
+   $telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::PARSE_MODE => TelegramCommandKey::HTML, TelegramCommandKey::MESSAGE => analyzeMessage($text)]);
 ?>
 
 
