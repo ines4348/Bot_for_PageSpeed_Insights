@@ -39,10 +39,16 @@
     {
         $db = create_db_connect();
         $name = mysqli_real_escape_string($db, $name);
-        $result = mysqli_query($db, "select * from `user` where name='$name' LIMIT 1");return false;
-        mysqli_close($db);
-        if(mysqli_fetch_array($result) !== false) return true;
-        return false;
+        $result = mysqli_query($db, "select * from `user` where name='$name' LIMIT 1");
+        if(mysqli_fetch_array($result) !== false) 
+        {
+            mysqli_close($db);
+            return true;
+        }
+        else{
+            mysqli_close($db);
+            return false;
+        }
     }
 
     function create_user($chat_id, $name)
