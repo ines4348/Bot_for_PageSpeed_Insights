@@ -38,15 +38,6 @@
     $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
     $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; 
 
- /*   
-    $telegram = new Api(BOT_KEY); 
-    $result = $telegram -> getWebhookUpdates(); 
-    $text = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::TEXT]; 
-    $separatedText = explode(" ", $text);
-    $chat_id = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::CHAT][TelegramCommandKey::ID]; 
-    $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
-    $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; 
-*/
     $welcomeMessage = str_replace("{name}", $name, WELCOME_USER);
 
     function analyzeMessage($text)
@@ -83,7 +74,7 @@ return $currentUrl;
    /*$telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::PARSE_MODE => TelegramCommandKey::HTML, TelegramCommandKey::MESSAGE => analyzeMessage($text)]);*/
    if($text){
        $temp=analyzeMessage($text);
-       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $temp ]);
+       $telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::PARSE_MODE => TelegramCommandKey::HTML, TelegramCommandKey::MESSAGE => $temp ]);
    }
 ?>
 
