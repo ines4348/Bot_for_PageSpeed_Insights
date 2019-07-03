@@ -1,7 +1,5 @@
 <?php
 
-    require_once("/vendor/thingengineer/mysqli-database-class/MysqliDb.php"); 
-
     const DB_HOST = "us-cdbr-iron-east-02.cleardb.net";
     const DB_USERNAME = "b60754546ea096";
     const DB_PASSWORD = "36da8d02";
