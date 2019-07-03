@@ -1,5 +1,5 @@
 <?php
-    include('../vendor/autoload.php'); //Подключаем библиотеку
+    include('vendor/autoload.php'); //Подключаем библиотеку
     include("pagespeed_api.php"); //Подключаем библиотеку
 
     const WELCOME_USER = "Добро пожаловать в бота, {name}!"; 
