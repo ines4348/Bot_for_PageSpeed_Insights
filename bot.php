@@ -30,7 +30,6 @@
         const HTML = 'HTML';
     }
     
-    
     use Telegram\Bot\Api; 
     $telegram = new Api(BOT_KEY); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
@@ -42,45 +41,19 @@
 
     $welcomeMessage = str_replace("{name}", $name, WELCOME_USER);
 
-    function getTextMessage(): string
-    {
-        return $text;
-    }
-
-    function getChatIdMessage(): string
-    {
-        return $chat_id;
-    }
-
-    function getUsername(): string
-    {
-        return $name;
-    }
-
-    function getKeyboard(): string
-    {
-        return $keyboard;
-    }
-
-    function sendMessageToChat($telegram, $chat_id, $reply)
-    {
-        $telegram->sendMessage([TelegramCommandKey.CHAT_ID => $chat_id, TelegramCommandKey.PARSE_MODE => TelegramCommandKey.HTML, TelegramCommandKey.TEXT_MESSAGE => $reply]);
-        return;
-    }
-    
     function analyzeMessage($text)
     {
         if($text){
             if($text == COMMAND_START) {
                 if(isset($name))
                 {
-                    sendMessageToChat($telegram, $chat_id, $welcomeMessage); 
+                    $reply = $welcomeMessage; 
                 }else 
                 {
-                    sendMessageToChat($telegram, $chat_id, WELCOME_INCOGNIT);
+                    $reply = WELCOME_INCOGNIT;
                 }
             }elseif($text == COMMAND_HELP) {
-                sendMessageToChat($telegram, $chat_id, LIST_COMMAND);           
+                $reply = LIST_COMMAND;           
             }elseif($separatedText[0] == COMMAND_CHECK) {
                 $delItem = array_shift($separatedText);
                 foreach($separatedText as $currentUrl)
@@ -89,18 +62,16 @@
                     {
                         $urlForPingApi = URL_API;
                         $reply = getResponseApi($urlForPingApi);
-                        sendMessageToChat($telegram, $chat_id, $reply);
                     }
                 }
             }
         }else{
             $reply = COMMAND_NOT_FOUND;
-            sendMessageToChat($telegram, $chat_id, $reply);
         }
-        return;
+        return $reply;
     }
 
-    analyzeMessage($text);
+   $telegram->sendMessage([TelegramCommandKey.CHAT_ID => $chat_id, TelegramCommandKey.PARSE_MODE => TelegramCommandKey.HTML, TelegramCommandKey.TEXT_MESSAGE => analyzeMessage($text)]);
 ?>
 
 
