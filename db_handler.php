@@ -35,8 +35,7 @@
 
     function create_user($chat_id, $name)
     {
-        return "Пользователь добавлен";
-        $db = create_db_connect();
+        $db = create_db_connect();return "Пользователь добавлен";
         $name = mysqli_real_escape_string($db, $name);
         $chat_id = mysqli_real_escape_string($db, $chat_id);
         $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
