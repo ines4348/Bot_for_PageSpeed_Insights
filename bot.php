@@ -29,6 +29,7 @@
         const PARSE_MODE = 'parse_mode';
         const HTML = 'HTML';
     }
+
     use Telegram\Bot\Api;
     $telegram = new Api(BOT_KEY);
     $result = $telegram -> getWebhookUpdates(); 
@@ -38,22 +39,29 @@
     $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
     $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; 
 
-    $welcomeMessage = str_replace("{name}", $name, WELCOME_USER);
+    function setWelcomeMessage($name)
+    {
+        if(isset($name))
+        {
+            $welcomeMessage = str_replace("{name}", $name, WELCOME_USER); 
+        }else 
+        {
+            $welcomeMessage = WELCOME_INCOGNIT;
+        }
+        return $welcomeMessage;
+    }
 
-    function analyzeMessage($text, $name, $separatedText)
+    function analyzeMessage($text, $welcomeMessage, $separatedText)
     {
         if($text){
-            if($text == COMMAND_START) {
-                if(isset($name))
-                {
-                    $reply = $welcomeMessage; 
-                }else 
-                {
-                    $reply = WELCOME_INCOGNIT;
-                }
-            }elseif($text == COMMAND_HELP) {
+            if($text == COMMAND_START)
+            {
+                $reply = $welcomeMessage; 
+            }elseif($text == COMMAND_HELP)
+            {
                 $reply = LIST_COMMAND;           
-            }elseif($separatedText[0] == COMMAND_CHECK) {
+            }elseif($separatedText[0] == COMMAND_CHECK)
+            {
                 $delItem = array_shift($separatedText);
                 foreach($separatedText as $currentUrl)
                 {
@@ -70,10 +78,10 @@
         return $reply;
     }
 
-
    if($text){
-       $temp=analyzeMessage($text, $name, $separatedText);
-       $telegram->sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp ]);
+       $welcomeMessage = setWelcomeMessage($name);
+       $temp=analyzeMessage($text, $welcomeMessage, $separatedText);
+       $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp ]);
    }
 ?>
 
