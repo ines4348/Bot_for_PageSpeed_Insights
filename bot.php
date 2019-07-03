@@ -80,7 +80,8 @@
         return $reply;
     }
 
-   $telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::PARSE_MODE => TelegramCommandKey::HTML, TelegramCommandKey::MESSAGE => analyzeMessage($text)]);
+   /*$telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::PARSE_MODE => TelegramCommandKey::HTML, TelegramCommandKey::MESSAGE => analyzeMessage($text)]);*/
+   $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
 ?>
 
 
