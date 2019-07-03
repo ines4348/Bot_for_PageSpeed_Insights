@@ -13,7 +13,7 @@
     const URL_API = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={currentUrl}&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs&locale=RU";
     const BOT_KEY = '831949384:AAEdN3KQz00sMaFto2yLotRGETTFmw_dk7c';
     const CONDITION_FOR_URL = "https://";
-    const COMMAND_NOT_FOUND = "По запросу \"<b>{text}</b>\" ничего не найдено.";
+    const COMMAND_NOT_FOUND = "По запросу \"{text}\" ничего не найдено.";
 
 //const DB_URL mysql://b60754546ea096:36da8d02@us-cdbr-iron-east-02.cleardb.net/heroku_7fe864cef8db15a?reconnect=true
 //const DB_NAME heroku_7fe864cef8db15a
@@ -72,7 +72,7 @@
             }
         }
         else{
-            $reply = COMMAND_NOT_FOUND;
+            $reply = str_replace("{text}", $text, COMMAND_NOT_FOUND);
         }
         return $reply;
     }
