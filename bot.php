@@ -29,16 +29,25 @@
         const PARSE_MODE = 'parse_mode';
         const HTML = 'HTML';
     }
+    use Telegram\Bot\Api;
+    $telegram = new Api(BOT_KEY);
+    $result = $telegram -> getWebhookUpdates(); 
     
-    use Telegram\Bot\Api; 
+    $text = $result["message"]["text"]; 
+    $separatedText = explode(" ", $text);
+    $chat_id = $result["message"]["chat"]["id"]; 
+    $name = $result["message"]["from"]["username"]; 
+    $keyboard = [["Последние статьи"],["Картинка"],["Гифка"]]; 
+
+ /*   
     $telegram = new Api(BOT_KEY); 
     $result = $telegram -> getWebhookUpdates(); 
     $text = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::TEXT]; 
-    $separatedText = explode(" ", $text);
+    
     $chat_id = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::CHAT][TelegramCommandKey::ID]; 
-    $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; //Юзернейм пользователя
-    $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; //Клавиатура
-
+    $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
+    $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; 
+*/
     $welcomeMessage = str_replace("{name}", $name, WELCOME_USER);
 
     function analyzeMessage($text)
