@@ -40,7 +40,7 @@
 
     $welcomeMessage = str_replace("{name}", $name, WELCOME_USER);
 
-    function analyzeMessage($text)
+    function analyzeMessage($text, $name, $separatedText)
     {
         if($text){
             if($text == COMMAND_START) {
@@ -59,8 +59,7 @@
                 {
                     if(substr($currentUrl, 0, 8) == CONDITION_FOR_URL)  
                     {
-                        $urlForPingApi = URL_API;
-return $currentUrl;
+                        $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
                         $reply = getResponseApi($urlForPingApi);
                     }
                 }
@@ -71,10 +70,10 @@ return $currentUrl;
         return $reply;
     }
 
-   /*$telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::PARSE_MODE => TelegramCommandKey::HTML, TelegramCommandKey::MESSAGE => analyzeMessage($text)]);*/
+
    if($text){
-       $temp=analyzeMessage($text);
-       $telegram->sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $name ]);
+       $temp=analyzeMessage($text, $name, $separatedText);
+       $telegram->sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp ]);
    }
 ?>
 
