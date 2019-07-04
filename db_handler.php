@@ -40,7 +40,7 @@
         $db = create_db_connect();
         $name = mysqli_real_escape_string($db, $name);
         $result = mysqli_query($db, "select * from `user` where name='$name' LIMIT 1");
-        if(mysqli_fetch_array($result) !== false) 
+        if(mysqli_fetch_array($result) !== 1) 
         {
             mysqli_close($db);
             return true;
