@@ -105,7 +105,7 @@
             mysqli_query($db, $query) or die();
         }
         mysqli_close($db);
-        return;
+        return 1;
     }
 
 
