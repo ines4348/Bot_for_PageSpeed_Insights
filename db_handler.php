@@ -10,6 +10,7 @@
     const SEPARATOR_VALUE = "', '";
 
     class dbColumnName {
+        const USER_ID = 'user_id';
         const CHAT_ID = 'chat_id';
         const USERNAME = 'username';
         const CREATE_DATA = 'create_data';
@@ -52,6 +53,39 @@
         }
     }
 
+    function is_url_set($chat_id, $url)
+    {
+        $db = create_db_connect();
+        $chat_id = mysqli_real_escape_string($db, $chat_id);
+        $user_id = get_user_id($chat_id);
+        $result = mysqli_query($db, "select * from user_url where user.user_id = " . $user_id . ";");
+        if($result->num_rows == 1) 
+        {
+            mysqli_close($db);
+            return true;
+        }
+        else{
+            mysqli_close($db);
+            return false;
+        }
+    }
+
+    function get_user_id($chat_id)
+    {
+        $db = create_db_connect();
+        $name = mysqli_real_escape_string($db, $chat_id);
+        $result = mysqli_query($db, "select user.user_id from user where user.chat_id = " . $chat_id . ";");
+        if($result->num_rows == 1) 
+        {
+            mysqli_close($db);
+            return $result;
+        }
+        else{
+            mysqli_close($db);
+            return false;
+        }
+    }
+
     function create_user($chat_id, $name)
     {
         $db = create_db_connect();
@@ -62,8 +96,23 @@
         $query = str_replace("{values}", $chat_id . SEPARATOR_VALUE . $name . SEPARATOR_VALUE . date(DATE_FORMAT), $query_replase_column);
         mysqli_query($db, $query) or die();
         mysqli_close($db);
-        return "Пользователь добавлен";
     }
+
+    function add_url($chat_id, $url)
+    {
+        $db = create_db_connect();
+        $url = mysqli_real_escape_string($db, $url);
+        $chat_id = mysqli_real_escape_string($db, $chat_id);
+        $user_id = get_user_id($chat_id);
+        if(is_url_set($chat_id, $url) == false){
+            $query_replase_table = str_replace("{table_name}", dbTableName::USER_URL, SQL_INSERT);
+            $query_replase_column = str_replace("{column_name}", dbColumnName::USER_ID . SEPARATOR . dbColumnName::USER_URL, $query_replase_table);
+            $query = str_replace("{values}", $user_id . SEPARATOR_VALUE . $url, $query_replase_column);
+            mysqli_query($db, $query) or die();
+        }
+        mysqli_close($db);
+    }
+
 
     
 ?>
