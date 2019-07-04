@@ -117,8 +117,7 @@
         $db = create_db_connect();
         $chat_id = mysqli_real_escape_string($db, $chat_id);
         $user_id = get_user_id($chat_id);
-        $result = mysqli_query($db, "update user_last_connect set user_last_connect_date = " . date(DATE_FORMAT) . " where user_id = " . $user_id . ";");
-        return "update user_last_connect set user_last_connect_date = '" . date(DATE_FORMAT) . "' where user_id = " . $user_id . ";";
+        $result = mysqli_query($db, "update user_last_connect set user_last_connect_date = '" . date(DATE_FORMAT) . "' where user_id = " . $user_id . ";");
         mysqli_close($db);
         return;
     }
