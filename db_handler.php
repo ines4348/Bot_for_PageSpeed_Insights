@@ -10,9 +10,9 @@
     const SEPARATOR_VALUE = ", ";
 
     class dbColumnName {
-        const CHAT_ID = 'chat_id';
-        const USERNAME = 'username';
-        const CREATE_DATA = 'create_data';
+        const CHAT_ID = 'user.chat_id';
+        const USERNAME = 'user.username';
+        const CREATE_DATA = 'user.create_data';
         const USER_LAST_CONNECTION_DATA = 'user_last_connect_data';
         const USER_URL = 'user_url';
     }
