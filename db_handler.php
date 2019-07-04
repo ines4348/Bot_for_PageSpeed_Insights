@@ -40,7 +40,6 @@
         $db = create_db_connect();
         $name = mysqli_real_escape_string($db, $chat_id);
         $result = mysqli_query($db, "select * from user where user.chat_id = " . $chat_id . ";");
-        return $result->num_rows;
         if($result->num_rows == 1) 
         {
             mysqli_close($db);
