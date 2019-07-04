@@ -56,7 +56,7 @@
     function is_url_set($user_id, $url)
     {
         $db = create_db_connect();
-        $result = mysqli_query($db, "select * from user_url where user.user_id = " . $user_id . " and user_url = '" . $url . "';");
+        $result = mysqli_query($db, "select * from user_url where user_url.user_id = " . $user_id . " and user_url = '" . $url . "';");
         if($result->num_rows == 1) 
         {
             mysqli_close($db);
@@ -110,6 +110,26 @@
         }
         mysqli_close($db);
         return;
+    }
+
+    function getUserUrlList($chat_id):string
+    {
+        $db = create_db_connect();
+        $chat_id = mysqli_real_escape_string($db, $chat_id);
+        $user_id = get_user_id($chat_id);
+        $query = mysqli_query($db, "select user_url.user_url from user_url where user_url.user_id = " . $user_id . " order by user_url.user_url_id desc limit 100");
+        $result = mysqli_query($db, $query);
+        if ($result->num_rows > 0) {
+            $resultArray = mysqli_fetch_assoc($result);
+            foreach($resultArray as $currentUrl) {
+                $userUrlList = $currentUrl . " ";
+            }
+        }else
+        {
+            $userUrlList = '';
+        }
+
+        return $userUrlList;
     }
 
     function update_last_activity_user($chat_id)
