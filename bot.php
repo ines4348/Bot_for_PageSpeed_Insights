@@ -66,7 +66,7 @@
                 {
                     $test = add_url($chat_id, $currentUrl);
                     $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
-                    $reply = getResponseApi($urlForPingApi);
+                    $reply = $test . getResponseApi($urlForPingApi);
                 }
             }
         }
