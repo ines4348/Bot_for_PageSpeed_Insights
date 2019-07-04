@@ -10,9 +10,9 @@
     const SEPARATOR_VALUE = ", ";
 
     class dbColumnName {
-        const CHAT_ID = 'user.chat_id';
-        const USERNAME = 'user.username';
-        const CREATE_DATA = 'user.create_data';
+        const CHAT_ID = 'chat_id';
+        const USERNAME = 'username';
+        const CREATE_DATA = 'create_data';
         const USER_LAST_CONNECTION_DATA = 'user_last_connect_data';
         const USER_URL = 'user_url';
     }
@@ -60,6 +60,7 @@
         $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
         $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . SEPARATOR . dbColumnName::USERNAME . SEPARATOR . dbColumnName::CREATE_DATA, $query_replase_table);
         $query = str_replace("{values}", $chat_id . SEPARATOR_VALUE . $name . SEPARATOR_VALUE . date(DATE_FORMAT), $query_replase_column);
+        return $query;
         mysqli_query($db, $query) or die();
         
         mysqli_close($db);
