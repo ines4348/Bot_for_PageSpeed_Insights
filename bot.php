@@ -49,7 +49,7 @@
         return $welcomeMessage;
     }
 
-    function analyzeMessage($text, $welcomeMessage, $separatedText)
+    function analyzeMessage($text, $welcomeMessage, $separatedText, $chat_id)
     {
         if($text == COMMAND_START)
         {
@@ -82,7 +82,7 @@
            $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp]);
 	   }
        $welcomeMessage = setWelcomeMessage($name);
-       $temp=analyzeMessage($text, $welcomeMessage, $separatedText);
+       $temp=analyzeMessage($text, $welcomeMessage, $separatedText, $chat_id);
        $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp]);
    }
 ?>
