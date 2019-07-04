@@ -77,7 +77,7 @@
 
    if($text){
        
-       if(is_user_set($name) == true){
+       if(is_user_set($name) == false){
            $temp = create_user($chat_id, $name);
            $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp]);
 	   }

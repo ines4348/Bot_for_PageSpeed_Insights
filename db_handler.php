@@ -35,11 +35,11 @@
         return $db;
     }
 
-    function is_user_set($name)
+    function is_user_set($chat_id)
     {
         $db = create_db_connect();
-        $name = mysqli_real_escape_string($db, $name);
-        $result = mysqli_query($db, "select * from `user` where name='$name' LIMIT 1");
+        $name = mysqli_real_escape_string($db, $chat_id);
+        $result = mysqli_query($db, "select * from `user` where name=' . $chat_id . ' LIMIT 1");
         return mysqli_fetch_array($result);
         if(mysqli_fetch_array($result) !== false) 
         {
