@@ -75,10 +75,11 @@
         $db = create_db_connect();
         $name = mysqli_real_escape_string($db, $chat_id);
         $result = mysqli_query($db, "select user_id from user where user.chat_id = " . $chat_id . ";");
+        $row = mysqli_fetch_array($result)
         if($result->num_rows == 1) 
         {
             mysqli_close($db);
-            return $result->user_id;
+            return $row[dbColumnName::USER_ID];
         }
         else{
             mysqli_close($db);
