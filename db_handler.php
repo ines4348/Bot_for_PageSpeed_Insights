@@ -92,6 +92,7 @@
         $query_replase_table = str_replace("{table_name}", dbTableName::USER_LAST_CONNECT, SQL_INSERT);
         $query_replase_column = str_replace("{column_name}", dbColumnName::USER_ID . SEPARATOR . dbColumnName::USERNAME . SEPARATOR . dbColumnName::CREATE_DATE, $query_replase_table);
         $query = str_replace("{values}", $chat_id . SEPARATOR_VALUE . $name . SEPARATOR_VALUE . date(DATE_FORMAT), $query_replase_column);
+        return $query;
         mysqli_query($db, $query) or die();
         mysqli_close($db);
     }
