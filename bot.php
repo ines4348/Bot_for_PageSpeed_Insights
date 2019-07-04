@@ -64,8 +64,7 @@
             {
                 if(substr($currentUrl, 0, 8) == CONDITION_FOR_URL)  
                 {
-                    $reply = add_url($chat_id, $currentUrl);
-                    return $reply;
+                    add_url($chat_id, $currentUrl);
                     $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
                     $reply = getResponseApi($urlForPingApi);
                 }
