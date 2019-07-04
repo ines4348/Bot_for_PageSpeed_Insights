@@ -13,8 +13,8 @@
         const USER_ID = 'user_id';
         const CHAT_ID = 'chat_id';
         const USERNAME = 'username';
-        const CREATE_DATA = 'create_data';
-        const USER_LAST_CONNECTION_DATA = 'user_last_connect_data';
+        const CREATE_DATE = 'create_date';
+        const USER_LAST_CONNECTION_DATE = 'user_last_connect_date';
         const USER_URL = 'user_url';
     }
 
@@ -85,7 +85,12 @@
         $name = mysqli_real_escape_string($db, $name);
         $chat_id = mysqli_real_escape_string($db, $chat_id);
         $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
-        $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . SEPARATOR . dbColumnName::USERNAME . SEPARATOR . dbColumnName::CREATE_DATA, $query_replase_table);
+        $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . SEPARATOR . dbColumnName::USERNAME . SEPARATOR . dbColumnName::CREATE_DATE, $query_replase_table);
+        $query = str_replace("{values}", $chat_id . SEPARATOR_VALUE . $name . SEPARATOR_VALUE . date(DATE_FORMAT), $query_replase_column);
+        mysqli_query($db, $query) or die();
+        $user_id = get_user_id($chat_id);
+        $query_replase_table = str_replace("{table_name}", dbTableName::USER_LAST_CONNECT, SQL_INSERT);
+        $query_replase_column = str_replace("{column_name}", dbColumnName::USER_ID . SEPARATOR . dbColumnName::USERNAME . SEPARATOR . dbColumnName::CREATE_DATE, $query_replase_table);
         $query = str_replace("{values}", $chat_id . SEPARATOR_VALUE . $name . SEPARATOR_VALUE . date(DATE_FORMAT), $query_replase_column);
         mysqli_query($db, $query) or die();
         mysqli_close($db);
@@ -104,10 +109,18 @@
             mysqli_query($db, $query) or die();
         }
         mysqli_close($db);
-        return 1;
+        return;
     }
 
-
+    function update_last_activity_user($chat_id)
+    {
+        $db = create_db_connect();
+        $chat_id = mysqli_real_escape_string($db, $chat_id);
+        $user_id = get_user_id($chat_id);
+        $result = mysqli_query($db, "update user_last_connect set user_last_connect_date = " . date(DATE_FORMAT) . " where user.chat_id = " . $user_id . ";");
+        mysqli_close($db);
+        return;
+    }
     
 ?>
 
