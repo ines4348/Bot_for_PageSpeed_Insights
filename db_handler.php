@@ -7,7 +7,7 @@
     const SQL_INSERT = "insert into {table_name} ({column_name}) values ('{values}')";
     const DATE_FORMAT = "y.m.d";
     const SEPARATOR = ", ";
-    const SEPARATOR_VALUE = ", ";
+    const SEPARATOR_VALUE = "', '";
 
     class dbColumnName {
         const CHAT_ID = 'chat_id';
