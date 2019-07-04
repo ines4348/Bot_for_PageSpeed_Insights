@@ -59,7 +59,9 @@
         $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
         $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . SEPARATOR . dbColumnName::USERNAME . SEPARATOR . dbColumnName::CREATE_DATA, $query_replase_table);
         $query = str_replace("{values}", $chat_id . SEPARATOR . $name . SEPARATOR . date(DATE_FORMAT), $query_replase_column);
+        
         mysqli_query($db, $query) or die();
+        return $query;
         mysqli_close($db);
         return "Пользователь добавлен";
     }
