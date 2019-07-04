@@ -4,7 +4,7 @@
     const DB_USERNAME = "b60754546ea096";
     const DB_PASSWORD = "36da8d02";
     const DB_NAME = "heroku_7fe864cef8db15a";
-    const SQL_INSERT = "insert into {table_name} ({column_name}) values({values})";
+    const SQL_INSERT = "insert into {table_name} ('{column_name}') values('{values}')";
     const DATE_FORMAT = "y.m.d";
     const SEPARATOR = "', '";
 
@@ -58,7 +58,7 @@
         $chat_id = mysqli_real_escape_string($db, $chat_id);
         $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
         $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . SEPARATOR . dbColumnName::USERNAME . SEPARATOR . dbColumnName::CREATE_DATA, $query_replase_table);
-        $query = str_replace("{values}", "'" . $chat_id . SEPARATOR . $name . SEPARATOR . date(DATE_FORMAT) . "'", $query_replase_column);
+        $query = str_replace("{values}", $chat_id . SEPARATOR . $name . SEPARATOR . date(DATE_FORMAT), $query_replase_column);
         return $query;
         mysqli_query($db, $query) or die();
         mysqli_close($db);
