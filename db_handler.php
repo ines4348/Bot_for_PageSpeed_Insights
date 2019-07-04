@@ -53,12 +53,10 @@
         }
     }
 
-    function is_url_set($chat_id, $url)
+    function is_url_set($user_id, $url)
     {
         $db = create_db_connect();
-        $chat_id = mysqli_real_escape_string($db, $chat_id);
-        $user_id = get_user_id($chat_id);
-        $result = mysqli_query($db, "select * from user_url where user.user_id = " . $user_id . ";");
+        $result = mysqli_query($db, "select * from user_url where user.user_id = " . $user_id . " and user_url = '" . $url . "';");
         if($result->num_rows == 1) 
         {
             mysqli_close($db);
@@ -96,10 +94,10 @@
     function add_url($chat_id, $url)
     {
         $db = create_db_connect();
-        $url = mysqli_real_escape_string($db, $url);
         $chat_id = mysqli_real_escape_string($db, $chat_id);
+        $url = mysqli_real_escape_string($db, $url);
         $user_id = get_user_id($chat_id);
-        if(is_url_set($chat_id, $url) == false){
+        if(is_url_set($user_id, $url) == false){
             $query_replase_table = str_replace("{table_name}", dbTableName::USER_URL, SQL_INSERT);
             $query_replase_column = str_replace("{column_name}", dbColumnName::USER_ID . SEPARATOR . dbColumnName::USER_URL, $query_replase_table);
             $query = str_replace("{values}", $user_id . SEPARATOR_VALUE . $url, $query_replase_column);
