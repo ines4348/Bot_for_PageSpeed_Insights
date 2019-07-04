@@ -39,9 +39,9 @@
     {
         $db = create_db_connect();
         $name = mysqli_real_escape_string($db, $chat_id);
-        $query = "select count(user.user_id) from user where user.chat_id = " . $chat_id . ";";
-        return $query;
-        $result = mysqli_query($db, "select count(user.user_id) from user where user.chat_id = " . $chat_id . ";");
+        $query = "select * from user where user.chat_id = " . $chat_id . ";";
+        return $query . " " . $result->num_rows;
+        $result = mysqli_query($db, "select * from user where user.chat_id = " . $chat_id . ";");
         return $result->num_rows;
         if($result->num_rows == 1) 
         {
