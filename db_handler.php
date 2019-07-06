@@ -1,9 +1,6 @@
 <?php
+    require_once("config.php");
 
-    const DB_HOST = "us-cdbr-iron-east-02.cleardb.net";
-    const DB_USERNAME = "b60754546ea096";
-    const DB_PASSWORD = "36da8d02";
-    const DB_NAME = "heroku_7fe864cef8db15a";
     const SQL_INSERT = "insert into {table_name} ({column_name}) values ('{values}');";
     const DATE_FORMAT = "y.m.d";
     const SEPARATOR = ", ";
