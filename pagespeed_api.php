@@ -3,7 +3,7 @@
     const PARAMETR_MOBILE = "&strategy=mobile";
     const PARAMETR_DESCTOP = "&strategy=desktop";
     const PERFORMANCE = "Производительность: ";
-    const MOBILE = "Мобильник \n";
+    const MOBILE = "Мобильный телефон \n";
     const DESCTOP = "Компьютер \n";
     const NEWLINE = "\n";
 
