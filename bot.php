@@ -98,7 +98,7 @@
         if($separatedText[0] == COMMAND_CHECK)
         {
             $delItem = array_shift($separatedText);
-            $reply = getMessageFromApi($telegram, $chart_id, $separatedText);
+            $reply = getMessageFromApi($telegram, $chat_id, $separatedText);
             sendMessageToChart($telegram, $chat_id, $reply);
         }
         else{
