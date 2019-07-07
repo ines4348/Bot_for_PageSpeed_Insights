@@ -49,13 +49,13 @@
         return $welcomeMessage;
     }
 
-    function sendChackAll($chat_id)
+    function sendChackAll($telegram, $chat_id)
     {
         $userUrlList = explode(" ", getUserUrlList($chat_id));
-        getMessageFromApi($userUrlList);
+        getMessageFromApi($telegram, $chart_id, $userUrlList);
     }
 
-    function analyzeMessage($text, $welcomeMessage, $chat_id)
+    function analyzeMessage($telegram, $text, $welcomeMessage, $chat_id)
     {
         
         switch ($text) {
@@ -72,13 +72,12 @@
                 sendMessageToChart($telegram, $chat_id, $reply);
                 break;                
             default:
-                $reply = switchCommand($text);
-                sendMessageToChart($telegram, $chat_id, $reply);
+                $reply = switchCommand($telegram, $text);
                 break;
         }
     }
 
-    function getMessageFromApi($separatedText)
+    function getMessageFromApi($telegram, $chat_id, $separatedText)
     {
         foreach($separatedText as $currentUrl)
         {
@@ -93,13 +92,13 @@
         }
     }
 
-    function switchCommand($text)
+    function switchCommand($telegram, $chat_id, $text)
     {
         $separatedText = explode(" ", $text);
         if($separatedText[0] == COMMAND_CHECK)
         {
             $delItem = array_shift($separatedText);
-            $reply = getMessageFromApi($separatedText);
+            $reply = getMessageFromApi($telegram, $chart_id, $separatedText);
             sendMessageToChart($telegram, $chat_id, $reply);
         }
         else{
@@ -119,7 +118,7 @@
            $temp = createUser($chat_id, $name);
        }
        $welcomeMessage = setWelcomeMessage($name);
-       analyzeMessage($text, $welcomeMessage, $chat_id);
+       analyzeMessage($telegram, $text, $welcomeMessage, $chat_id);
     }
 ?>
 
