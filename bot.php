@@ -90,7 +90,6 @@
     if($text){       
        if(isUserSet($chat_id) == false){
            $temp = createUser($chat_id, $name);
-           $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp]);
        }
        $welcomeMessage = setWelcomeMessage($name);
        $replay_message=analyzeMessage($text, $welcomeMessage, $chat_id);
