@@ -3,6 +3,7 @@
     require_once("vendor/autoload.php");
     require_once("pagespeed_api.php"); 
     require_once("db_handler.php"); 
+    require_once("config.php");
 
     const WELCOME_USER = "Добро пожаловать в бота, {name}!"; 
     const WELCOME_INCOGNIT = "Добро пожаловать в бота, незнакомец!";
@@ -11,8 +12,6 @@
     const COMMAND_CHECK = "/check";
     const COMMAND_VIEW_LIST_COMMAND = "Список команд";
     const LIST_COMMAND = "/start - начать общение \n/check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://";
-    const URL_API = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={currentUrl}&key=AIzaSyDZk6qaWml22Q8CiYms9Y8u4IkZ2rIsRVs&locale=RU";
-    const BOT_KEY = "831949384:AAEdN3KQz00sMaFto2yLotRGETTFmw_dk7c";
     const CONDITION_FOR_URL = "https://";
     const COMMAND_NOT_FOUND = "По запросу \"{text}\" ничего не найдено.";
 
@@ -27,7 +26,6 @@
         const PARSE_MODE = "parse_mode";
         const HTML = "HTML";
     }
-
     use Telegram\Bot\Api;
     $telegram = new Api(BOT_KEY);
     $result = $telegram -> getWebhookUpdates(); 
@@ -48,7 +46,7 @@
         return $welcomeMessage;
     }
 
-    function analyzeMessage($text, $welcomeMessage, $separatedText, $chat_id)
+    function analyzeMessage($text, $welcomeMessage, $chat_id)
     {
         
         switch ($text) {
@@ -62,7 +60,7 @@
                 $reply = switchCommand($text);
                 break;
         }
-        return reply;
+        return $reply;
     }
 
     function switchCommand($text)
@@ -87,17 +85,17 @@
         }
         return $reply;
     }
-    
-
-   if($text){       
+    $name = "test";
+    $chat_id = 2486654;
+    if($text){       
        if(isUserSet($chat_id) == false){
            $temp = createUser($chat_id, $name);
            $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp]);
-	   }
+       }
        $welcomeMessage = setWelcomeMessage($name);
-       $replay_message=analyzeMessage($text, $welcomeMessage, $separatedText, $chat_id);
+       $replay_message=analyzeMessage($text, $welcomeMessage, $chat_id);
        $telegram->sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $replay_message]);
-   }
+    }
 ?>
 
 
