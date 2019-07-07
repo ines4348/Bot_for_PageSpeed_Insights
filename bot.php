@@ -62,6 +62,7 @@
                 $reply = switchCommand($text);
                 break;
         }
+        return reply;
     }
 
     function switchCommand($text)
