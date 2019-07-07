@@ -26,13 +26,14 @@
         const PARSE_MODE = "parse_mode";
         const HTML = "HTML";
     }
+
     use Telegram\Bot\Api;
     $telegram = new Api(BOT_KEY);
     $result = $telegram -> getWebhookUpdates(); 
     $text = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::TEXT]; 
     $chat_id = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::CHAT][TelegramCommandKey::ID]; 
     $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
-    $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; 
+    $keyboard = [COMMAND_VIEW_LIST_COMMAND]; 
 
     function setWelcomeMessage($name)
     {
@@ -85,8 +86,7 @@
         }
         return $reply;
     }
-    $name = "test";
-    $chat_id = 2486654;
+
     if($text){       
        if(isUserSet($chat_id) == false){
            $temp = createUser($chat_id, $name);
