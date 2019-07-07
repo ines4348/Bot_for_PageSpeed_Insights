@@ -12,7 +12,7 @@
     const COMMAND_CHECK = "/check";
     const COMMAND_CHECK_ALL = "/check_all";
     const COMMAND_VIEW_LIST_COMMAND = "Список команд";
-    const LIST_COMMAND = "/start - начать общение \n/check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://";
+    const LIST_COMMAND = "/start - начать общение \n/check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://\n/check_all - запуск проверки адресов, привязанных к пользователю(максимум 100)";
     const CONDITION_FOR_URL = "https://";
     const COMMAND_NOT_FOUND = "По запросу \"{text}\" ничего не найдено.";
     const NEWLINE = "\n";
