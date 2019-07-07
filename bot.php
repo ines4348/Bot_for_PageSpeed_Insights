@@ -51,7 +51,7 @@
 
     function sendCheckAll($telegram, $chat_id)
     {
-        $replay = getUserUrlList($chat_id);
+        $reply = getUserUrlList($chat_id);
         sendMessageToChart($telegram, $chat_id, $reply);/*
         $userUrlList = explode(" ", getUserUrlList($chat_id));
         getMessageFromApi($telegram, $chat_id, $userUrlList);*/
