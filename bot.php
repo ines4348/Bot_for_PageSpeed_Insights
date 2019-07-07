@@ -77,7 +77,7 @@
                     addUrl($chat_id, $currentUrl);
                     updateLastActivityUser($chat_id);
                     $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
-                    $reply = getResponseApi($urlForPingApi);
+                    $reply = getResultFromApi($urlForPingApi);
                 }
             }
         }

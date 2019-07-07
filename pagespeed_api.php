@@ -1,9 +1,23 @@
 <?php
 
+    const PARAMETR_MOBILE = "&strategy=mobile";
+    const PARAMETR_DESCTOP = "&strategy=desktop";
+    const PERFORMANCE = "Производительность: ";
+    const MOBILE = "Мобильник \n";
+    const DESCTOP = "Компьютер \n";
+    const NEWLINE = "\n";
+
     function getDataFromJson($responseJson): string
     {
         $textJson = json_decode($responseJson);
-        $textResult = "Производительность: ".$textJson->lighthouseResult->categories->performance->score;
+        $textResult = PERFORMANCE . $textJson->lighthouseResult->categories->performance->score;
+        return $textResult;
+    }
+
+    function getResultFromApi($urlApi): string
+    {
+        $textResult = MOBILE . getResponseApi($urlApi . PARAMETR_MOBILE) . NEWLINE;
+        $textResult = DESCTOP . $textResult getResponseApi($urlApi . PARAMETR_DESCTOP);
         return $textResult;
     }
     
@@ -15,16 +29,16 @@
         curl_setopt($ch, CURLOPT_HEADER, 0);
       
         $output = curl_exec($ch);
-        if($output === FALSE) 
+        if($output === false) 
         {
-            $textJson = "cURL Error: ".curl_error($ch);
+            $textFromJson = "cURL Error: ".curl_error($ch);
         }
         else
         {
-            $textJson = getDataFromJson($output);
+            $textFromJson = getDataFromJson($output);
         }
  
         curl_close($ch);
-        return $textJson;
+        return $textFromJson;
     }
 ?>
