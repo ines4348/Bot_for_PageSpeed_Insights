@@ -124,7 +124,7 @@
         return;
     }
 
-    $mysqli->close();
+    $db->close();
     
 ?>
 
