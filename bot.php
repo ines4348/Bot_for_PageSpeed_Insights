@@ -32,7 +32,6 @@
     $telegram = new Api(BOT_KEY);
     $result = $telegram -> getWebhookUpdates(); 
     $text = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::TEXT]; 
-    $separatedText = explode(" ", $text);
     $chat_id = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::CHAT][TelegramCommandKey::ID]; 
     $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
     $keyboard = [[COMMAND_VIEW_LIST_COMMAND]]; 
@@ -51,18 +50,29 @@
 
     function analyzeMessage($text, $welcomeMessage, $separatedText, $chat_id)
     {
-        if($text == COMMAND_START)
-        {
-            $reply = $welcomeMessage; 
-        }elseif($text == COMMAND_HELP)
-        {
-            $reply = LIST_COMMAND;           
-        }elseif($separatedText[0] == COMMAND_CHECK)
+        
+        switch ($text) {
+            case COMMAND_START:
+                $reply = $welcomeMessage;
+                break;
+            case COMMAND_HELP:
+                $reply = LIST_COMMAND;
+                break;
+            default:
+                $reply = switchCommand($text);
+                break;
+        }
+    }
+
+    function switchCommand($text)
+    {
+        $separatedText = explode(" ", $text);
+        if($separatedText[0] == COMMAND_CHECK)
         {
             $delItem = array_shift($separatedText);
             foreach($separatedText as $currentUrl)
             {
-                if(substr($currentUrl, 0, 8) == CONDITION_FOR_URL)  
+                if(strripos($currentUrl, CONDITION_FOR_URL) == 0)  
                 {
                     add_url($chat_id, $currentUrl);
                     update_last_activity_user($chat_id);
@@ -76,6 +86,7 @@
         }
         return $reply;
     }
+    
 
    if($text){       
        if(is_user_set($chat_id) == false){
