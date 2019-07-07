@@ -10,6 +10,7 @@
     const COMMAND_START = "/start";
     const COMMAND_HELP = "/help";
     const COMMAND_CHECK = "/check";
+    const COMMAND_CHECK_ALL = "/check_all";
     const COMMAND_VIEW_LIST_COMMAND = "Список команд";
     const LIST_COMMAND = "/start - начать общение \n/check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://";
     const CONDITION_FOR_URL = "https://";
@@ -48,21 +49,48 @@
         return $welcomeMessage;
     }
 
+    function sendChackAll($chat_id)
+    {
+        $userUrlList = explode(" ", getUserUrlList($chat_id));
+        getMessageFromApi($userUrlList);
+    }
+
     function analyzeMessage($text, $welcomeMessage, $chat_id)
     {
         
         switch ($text) {
             case COMMAND_START:
                 $reply = $welcomeMessage;
+                sendMessageToChart($telegram, $chat_id, $replay);
                 break;
             case COMMAND_HELP:
                 $reply = LIST_COMMAND;
+                sendMessageToChart($telegram, $chat_id, $replay);
                 break;
+            case COMMAND_CHECK_ALL:
+                $reply = sendChackAll($chat_id);
+                sendMessageToChart($telegram, $chat_id, $replay);
+                break;                
             default:
                 $reply = switchCommand($text);
+                sendMessageToChart($telegram, $chat_id, $replay);
                 break;
         }
-        return $reply;
+    }
+
+    function getMessageFromApi($separatedText)
+    {
+        foreach($separatedText as $currentUrl)
+        {
+            if(strripos($currentUrl, CONDITION_FOR_URL) == 0)  
+            {
+                addUrl($chat_id, $currentUrl);
+                updateLastActivityUser($chat_id);
+                $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
+                $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
+                sendMessageToChart($telegram, $chat_id, $replay);
+            }
+        }
     }
 
     function switchCommand($text)
@@ -71,21 +99,19 @@
         if($separatedText[0] == COMMAND_CHECK)
         {
             $delItem = array_shift($separatedText);
-            foreach($separatedText as $currentUrl)
-            {
-                if(strripos($currentUrl, CONDITION_FOR_URL) == 0)  
-                {
-                    addUrl($chat_id, $currentUrl);
-                    updateLastActivityUser($chat_id);
-                    $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
-                    $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
-                }
-            }
+            $reply = getMessageFromApi($separatedText);
+            sendMessageToChart($telegram, $chat_id, $replay);
         }
         else{
             $reply = str_replace("{text}", $text, COMMAND_NOT_FOUND);
+            sendMessageToChart($telegram, $chat_id, $replay);
         }
         return $reply;
+    }
+
+    function sendMessageToChart($telegram, $chat_id, $replay_message)
+    {
+        $telegram->sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $replay_message]);
     }
 
     if($text){       
@@ -93,8 +119,7 @@
            $temp = createUser($chat_id, $name);
        }
        $welcomeMessage = setWelcomeMessage($name);
-       $replay_message=analyzeMessage($text, $welcomeMessage, $chat_id);
-       $telegram->sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $replay_message]);
+       analyzeMessage($text, $welcomeMessage, $chat_id);
     }
 ?>
 
