@@ -118,13 +118,14 @@
         $result = $db->query("INSERT INTO user_last_connect (user_id, user_last_connect_date) VALUES ('$user_id', '$create_date');");
     }
 
-    function addUrl($url)
+    function addUrl($chat_id, $url)
     {
         global $db;
         $url = $db->real_escape_string($url);
         
         if(!isUrlSet($url)){
             $result = $db->query("INSERT INTO url (url) VALUES ('$url');");
+            addUserUrl($chat_id, $url);
         }
     }
 

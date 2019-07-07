@@ -74,8 +74,8 @@
             {
                 if(strripos($currentUrl, CONDITION_FOR_URL) == 0)  
                 {
-                    add_url($chat_id, $currentUrl);
-                    update_last_activity_user($chat_id);
+                    addUrl($chat_id, $currentUrl);
+                    updateLastActivityUser($chat_id);
                     $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
                     $reply = getResponseApi($urlForPingApi);
                 }
@@ -89,13 +89,13 @@
     
 
    if($text){       
-       if(is_user_set($chat_id) == false){
-           $temp = create_user($chat_id, $name);
+       if(isUserSet($chat_id) == false){
+           $temp = createUser($chat_id, $name);
            $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $temp]);
 	   }
        $welcomeMessage = setWelcomeMessage($name);
        $replay_message=analyzeMessage($text, $welcomeMessage, $separatedText, $chat_id);
-       $telegram -> sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $replay_message]);
+       $telegram->sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $replay_message]);
    }
 ?>
 
