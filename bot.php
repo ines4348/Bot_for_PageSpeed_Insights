@@ -109,7 +109,10 @@
 
     function sendMessageToChart($telegram, $chat_id, $reply_message)
     {
-        $telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $reply_message]);
+        if($reply_message)
+        {
+            $telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $reply_message]);
+        }
     }
 
     if($text){       
