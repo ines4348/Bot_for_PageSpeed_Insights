@@ -51,7 +51,6 @@
 
     function sendChackAll($telegram, $chat_id)
     {
-        sendMessageToChart($telegram, $chat_id, getUserUrlList($chat_id));
         $userUrlList = explode(" ", getUserUrlList($chat_id));
         getMessageFromApi($telegram, $chart_id, $userUrlList);
     }
