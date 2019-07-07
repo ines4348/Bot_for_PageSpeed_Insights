@@ -72,7 +72,7 @@
                 sendMessageToChart($telegram, $chat_id, $reply);
                 break;                
             default:
-                $reply = switchCommand($telegram, $text);
+                $reply = switchCommand($telegram, $chat_id, $text);
                 break;
         }
     }
