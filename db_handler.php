@@ -19,23 +19,18 @@
     }
 
     global $db;
-    $db = create_db_connect();
+    $db = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-    function create_db_connect()
+    if ($db->connect_errno) 
     {
-        $db = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-        
-        if ($db->connect_errno) 
-        {
-            exit();
-        }
-        
-        $db->query("SET NAMES utf8");
-        $db->query("SET CHARACTER SET utf8");
-        $db->query("SET COLLATION_CONNECTION='utf8_general_ci'"); 
-        setlocale(LC_ALL,"ru_RU.UTF8");
-        return $db;
+        exit();
     }
+
+    $db->query("SET NAMES utf8");
+    $db->query("SET CHARACTER SET utf8");
+    $db->query("SET COLLATION_CONNECTION='utf8_general_ci'"); 
+    setlocale(LC_ALL,"ru_RU.UTF8");
+    
 
     function is_user_set($chat_id)
     {
