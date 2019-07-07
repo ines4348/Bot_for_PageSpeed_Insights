@@ -51,6 +51,7 @@
 
     function sendChackAll($telegram, $chat_id)
     {
+        sendMessageToChart($telegram, $chat_id, getUserUrlList($chat_id));
         $userUrlList = explode(" ", getUserUrlList($chat_id));
         getMessageFromApi($telegram, $chart_id, $userUrlList);
     }
@@ -87,7 +88,6 @@
                 $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
                 $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
                 sendMessageToChart($telegram, $chat_id, $reply);*/
-                sendMessageToChart($telegram, $chat_id, $currentUrl);
             }
         }
     }
