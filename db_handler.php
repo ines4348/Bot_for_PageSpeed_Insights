@@ -125,8 +125,8 @@
         
         if(!isUrlSet($url)){
             $result = $db->query("INSERT INTO url (url) VALUES ('$url');");
-            addUserUrl($chat_id, $url);
         }
+        addUserUrl($chat_id, $url);
     }
 
     function addUserUrl($chat_id, $url)
