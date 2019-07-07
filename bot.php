@@ -61,19 +61,19 @@
         switch ($text) {
             case COMMAND_START:
                 $reply = $welcomeMessage;
-                sendMessageToChart($telegram, $chat_id, $replay);
+                sendMessageToChart($telegram, $chat_id, $reply);
                 break;
             case COMMAND_HELP:
                 $reply = LIST_COMMAND;
-                sendMessageToChart($telegram, $chat_id, $replay);
+                sendMessageToChart($telegram, $chat_id, $reply);
                 break;
             case COMMAND_CHECK_ALL:
                 $reply = sendChackAll($chat_id);
-                sendMessageToChart($telegram, $chat_id, $replay);
+                sendMessageToChart($telegram, $chat_id, $reply);
                 break;                
             default:
                 $reply = switchCommand($text);
-                sendMessageToChart($telegram, $chat_id, $replay);
+                sendMessageToChart($telegram, $chat_id, $reply);
                 break;
         }
     }
@@ -88,7 +88,7 @@
                 updateLastActivityUser($chat_id);
                 $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
                 $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
-                sendMessageToChart($telegram, $chat_id, $replay);
+                sendMessageToChart($telegram, $chat_id, $reply);
             }
         }
     }
@@ -100,18 +100,18 @@
         {
             $delItem = array_shift($separatedText);
             $reply = getMessageFromApi($separatedText);
-            sendMessageToChart($telegram, $chat_id, $replay);
+            sendMessageToChart($telegram, $chat_id, $reply);
         }
         else{
             $reply = str_replace("{text}", $text, COMMAND_NOT_FOUND);
-            sendMessageToChart($telegram, $chat_id, $replay);
+            sendMessageToChart($telegram, $chat_id, $reply);
         }
         return $reply;
     }
 
-    function sendMessageToChart($telegram, $chat_id, $replay_message)
+    function sendMessageToChart($telegram, $chat_id, $reply_message)
     {
-        $telegram->sendMessage([ TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $replay_message]);
+        $telegram->sendMessage([TelegramCommandKey::CHAT_ID => $chat_id, TelegramCommandKey::TEXT => $reply_message]);
     }
 
     if($text){       
