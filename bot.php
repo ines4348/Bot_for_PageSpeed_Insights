@@ -49,10 +49,12 @@
         return $welcomeMessage;
     }
 
-    function sendChackAll($telegram, $chat_id)
+    function sendCheckAll($telegram, $chat_id)
     {
+        $replay = getUserUrlList($chat_id);
+        getMessageFromApi($telegram, $chat_id, $replay);/*
         $userUrlList = explode(" ", getUserUrlList($chat_id));
-        getMessageFromApi($telegram, $chat_id, $userUrlList);
+        getMessageFromApi($telegram, $chat_id, $userUrlList);*/
     }
 
     function analyzeMessage($telegram, $text, $welcomeMessage, $chat_id)
@@ -68,7 +70,7 @@
                 sendMessageToChart($telegram, $chat_id, $reply);
                 break;
             case COMMAND_CHECK_ALL:
-                $reply = sendChackAll($telegram, $chat_id);
+                $reply = sendCheckAll($telegram, $chat_id);
                 break;                
             default:
                 $reply = switchCommand($telegram, $chat_id, $text);
