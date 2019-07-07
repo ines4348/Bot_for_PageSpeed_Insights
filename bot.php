@@ -69,7 +69,7 @@
                 sendMessageToChart($telegram, $chat_id, $reply);
                 break;
             case COMMAND_CHECK_ALL:
-                $reply = sendChackAll($chat_id);
+                $reply = sendChackAll($telegram, $chat_id);
                 break;                
             default:
                 $reply = switchCommand($telegram, $chat_id, $text);
