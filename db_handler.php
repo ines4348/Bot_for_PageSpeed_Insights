@@ -1,11 +1,8 @@
 <?php
     require_once("config.php");
 
-    const SQL_INSERT = "insert into {table_name} ({column_name}) values ('{values}');";
     const DATE_FORMAT = "y.m.d";
-    const SEPARATOR = ", ";
-    const SEPARATOR_VALUE = "', '";
-
+    
     class dbColumnName {
         const USER_ID = 'user_id';
         const CHAT_ID = 'chat_id';
@@ -22,102 +19,91 @@
     }
 
     global $db;
-    
+    $db = create_db_connect();
+
     function create_db_connect()
     {
-        $db = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD) or die();
-        mysqli_select_db($db, DB_NAME) or die();
-        mysqli_query($db, "SET NAMES utf8");
-        mysqli_query($db, "SET CHARACTER SET utf8");
-        mysqli_query($db, "SET COLLATION_CONNECTION='utf8_general_ci'"); 
+        $db = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+        if ($db->connect_errno) 
+        {
+            exit();
+        }
+        
+        $db->query("SET NAMES utf8");
+        $db->query("SET CHARACTER SET utf8");
+        $db->query("SET COLLATION_CONNECTION='utf8_general_ci'"); 
         setlocale(LC_ALL,"ru_RU.UTF8");
         return $db;
     }
 
     function is_user_set($chat_id)
     {
-        $db = create_db_connect();
-        $name = mysqli_real_escape_string($db, $chat_id);
-        $result = mysqli_query($db, "select * from user where user.chat_id = " . $chat_id . ";");
+        $chat_id = $db->real_escape_string($chat_id);
+        $result = $db->query("SELECT * FROM  user as u WHERE u.chat_id = $chat_id;");
+        
         if($result->num_rows == 1) 
         {
-            mysqli_close($db);
             return true;
         }
-        else{
-            mysqli_close($db);
-            return false;
-        }
+        
+        return false;
     }
 
     function is_url_set($user_id, $url)
     {
-        $db = create_db_connect();
-        $result = mysqli_query($db, "select * from user_url where user_url.user_id = " . $user_id . " and user_url = '" . $url . "';");
+        $result = $db->query("SELECT * FROM  user_url as uu WHERE uu.user_id = $user_id AND uu.user_url = '$url';");
+        
         if($result->num_rows == 1) 
         {
-            mysqli_close($db);
             return true;
         }
-        else{
-            mysqli_close($db);
-            return false;
-        }
+        
+        return false;
     }
 
     function get_user_id($chat_id)
     {
-        $db = create_db_connect();
-        $name = mysqli_real_escape_string($db, $chat_id);
-        $result = mysqli_query($db, "select user_id from user where user.chat_id = " . $chat_id . ";");
-        $row = mysqli_fetch_array($result);
+        $chat_id = $db->real_escape_string($chat_id);
+        $result = $db->query("SELECT user_id FROM user as u WHERE u.chat_id = $chat_id;");
+        $row = $result->fetch_array(MYSQLI_ASSOC);
         $user_id = $row[dbColumnName::USER_ID];
-        mysqli_close($db);
         return $user_id;
     }
 
     function create_user($chat_id, $name)
     {
-        $db = create_db_connect();
-        $name = mysqli_real_escape_string($db, $name);
-        $chat_id = mysqli_real_escape_string($db, $chat_id);
-        $query_replase_table = str_replace("{table_name}", dbTableName::USER, SQL_INSERT);
-        $query_replase_column = str_replace("{column_name}", dbColumnName::CHAT_ID . SEPARATOR . dbColumnName::USERNAME . SEPARATOR . dbColumnName::CREATE_DATE, $query_replase_table);
-        $query = str_replace("{values}", $chat_id . SEPARATOR_VALUE . $name . SEPARATOR_VALUE . date(DATE_FORMAT), $query_replase_column);
-        mysqli_query($db, $query) or die();
+        $name = $db->real_escape_string($name);
+        $chat_id = $db->real_escape_string($chat_id);;
+        $create_date = date(DATE_FORMAT);
+        $result = $db->query("INSERT INTO user (chat_id, username, create_date) VALUES ('$chat_id', '$name', '$create_date');");
+        $result->free();
+
         $user_id = get_user_id($chat_id);
-        $query_replase_table = str_replace("{table_name}", dbTableName::USER_LAST_CONNECT, SQL_INSERT);
-        $query_replase_column = str_replace("{column_name}", dbColumnName::USER_ID . SEPARATOR . dbColumnName::USER_LAST_CONNECTION_DATE, $query_replase_table);
-        $query = str_replace("{values}", $user_id . SEPARATOR_VALUE . date(DATE_FORMAT), $query_replase_column);
-        mysqli_query($db, $query) or die();
-        mysqli_close($db);
+        $result = $db->query("INSERT INTO user_last_connect (user_id, user_last_connect_date) VALUES ('$user_id', '$create_date');");
     }
 
     function add_url($chat_id, $url)
     {
-        $db = create_db_connect();
-        $chat_id = mysqli_real_escape_string($db, $chat_id);
-        $url = mysqli_real_escape_string($db, $url);
+        $chat_id = $db->real_escape_string($chat_id);
+        $url = $db->real_escape_string($url);
         $user_id = get_user_id($chat_id);
-        if(is_url_set($user_id, $url) == false){
-            $query_replase_table = str_replace("{table_name}", dbTableName::USER_URL, SQL_INSERT);
-            $query_replase_column = str_replace("{column_name}", dbColumnName::USER_ID . SEPARATOR . dbColumnName::USER_URL, $query_replase_table);
-            $query = str_replace("{values}", $user_id . SEPARATOR_VALUE . $url, $query_replase_column);
-            mysqli_query($db, $query) or die();
+        
+        if(!is_url_set($user_id, $url)){
+            $result = $db->query("INSERT INTO user_url (user_id, user_url) VALUES ('$user_id', '$url);");
         }
-        mysqli_close($db);
+        
         return;
     }
 
     function getUserUrlList($chat_id):string
     {
-        $db = create_db_connect();
-        $chat_id = mysqli_real_escape_string($db, $chat_id);
+        $chat_id = $db->real_escape_string($chat_id);
         $user_id = get_user_id($chat_id);
-        $query = mysqli_query($db, "select user_url.user_url from user_url where user_url.user_id = " . $user_id . " order by user_url.user_url_id desc limit 100");
-        $result = mysqli_query($db, $query);
+        $result = $db->query("SELECT uu.user_url FROM user_url as uu WHERE uu.user_id = $user_id ORDER BY uu.user_url_id DESC LIMIT 100;");
+        
         if ($result->num_rows > 0) {
-            $resultArray = mysqli_fetch_assoc($result);
+            $resultArray = $result->fetch_array(MYSQLI_ASSOC);
             foreach($resultArray as $currentUrl) {
                 $userUrlList = $currentUrl . " ";
             }
@@ -131,13 +117,14 @@
 
     function update_last_activity_user($chat_id)
     {
-        $db = create_db_connect();
-        $chat_id = mysqli_real_escape_string($db, $chat_id);
+        $chat_id = $db->real_escape_string($chat_id);
         $user_id = get_user_id($chat_id);
-        $result = mysqli_query($db, "update user_last_connect set user_last_connect_date = '" . date(DATE_FORMAT) . "' where user_id = " . $user_id . ";");
-        mysqli_close($db);
+        $today = date(DATE_FORMAT);
+        $result = $db->query("UPDATE user_last_connect as ul SET ul.user_last_connect_date = '$today' WHERE ul.user_id = $user_id;");
         return;
     }
+
+    $mysqli->close();
     
 ?>
 
