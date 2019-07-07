@@ -52,7 +52,7 @@
     function sendChackAll($telegram, $chat_id)
     {
         $userUrlList = explode(" ", getUserUrlList($chat_id));
-        getMessageFromApi($telegram, $chart_id, $userUrlList);
+        getMessageFromApi($telegram, $chat_id, $userUrlList);
     }
 
     function analyzeMessage($telegram, $text, $welcomeMessage, $chat_id)
