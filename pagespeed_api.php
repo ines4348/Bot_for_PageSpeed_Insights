@@ -10,7 +10,7 @@
     function getDataFromJson($responseJson): string
     {
         $textJson = json_decode($responseJson);
-        $textResult = PERFORMANCE . $textJson->lighthouseResult->categories->performance->score;
+        $textResult = PERFORMANCE . ($textJson->lighthouseResult->categories->performance->score) * 100;
         return $textResult;
     }
 

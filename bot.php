@@ -69,7 +69,6 @@
                 break;
             case COMMAND_CHECK_ALL:
                 $reply = sendChackAll($chat_id);
-                sendMessageToChart($telegram, $chat_id, $reply);
                 break;                
             default:
                 $reply = switchCommand($telegram, $chat_id, $text);
@@ -83,11 +82,12 @@
         {
             if(strripos($currentUrl, CONDITION_FOR_URL) == 0)  
             {
-                addUrl($chat_id, $currentUrl);
+                /*addUrl($chat_id, $currentUrl);
                 updateLastActivityUser($chat_id);
                 $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
                 $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
-                sendMessageToChart($telegram, $chat_id, $reply);
+                sendMessageToChart($telegram, $chat_id, $reply);*/
+                sendMessageToChart($telegram, $chat_id, $currentUrl);
             }
         }
     }
