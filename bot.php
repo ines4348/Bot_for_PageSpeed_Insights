@@ -14,6 +14,7 @@
     const LIST_COMMAND = "/start - начать общение \n/check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://";
     const CONDITION_FOR_URL = "https://";
     const COMMAND_NOT_FOUND = "По запросу \"{text}\" ничего не найдено.";
+    const NEWLINE = "\n";
 
     class TelegramCommandKey {
         const CHAT_ID = "chat_id";
@@ -77,7 +78,7 @@
                     addUrl($chat_id, $currentUrl);
                     updateLastActivityUser($chat_id);
                     $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
-                    $reply = getResultFromApi($urlForPingApi);
+                    $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
                 }
             }
         }
