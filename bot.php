@@ -89,6 +89,7 @@
                 addUrl($chat_id, $currentUrl);
                 $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
                 $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
+                addCheckUrlData($currentUrl, $reply);
                 sendMessageToChart($telegram, $chat_id, $reply);
             }
         }
