@@ -14,7 +14,7 @@
     const COMMAND_VIEW_LIST_COMMAND = "Список команд";
     const LIST_COMMAND = "/start - начать общение \n/check {указать url} - запуск проверки, можно указать несколько адресов через пробел, каждый адрес начинается с https://. Каждый уникальный адрес из этого запроса добавляется в базу и по нему может быть получен результат командой /check_all\n/check_all - запуск проверки адресов, привязанных к пользователю(максимум 100)";
     const CONDITION_FOR_URL = "https://";
-    const COMMAND_NOT_FOUND = "По запросу \"{text}\" ничего не найдено.";
+    const COMMAND_NOT_FOUND = "По запросу \"{text}\" ничего не найдено. Воспользуйтесь командой /help";
     const NEWLINE = "\n";
 
     class TelegramCommandKey {
