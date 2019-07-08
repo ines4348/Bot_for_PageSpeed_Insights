@@ -68,10 +68,13 @@
 
     function sendCheckAll($telegram, $chat_id)
     {
-        $reply = getUserUrlList($chat_id);
-        sendMessageToChart($telegram, $chat_id, $reply);/*
-        $userUrlList = explode(" ", getUserUrlList($chat_id));
-        getMessageFromApi($telegram, $chat_id, $userUrlList);*/
+        $userUrlList = getUserUrlList($chat_id);
+        $separatedText = explode(" ", $userUrlList);
+        foreach($separatedText as $currentUrl)
+        {
+            $reply = getUrlData($currentUrl);
+            getMessageFromApi($telegram, $chat_id, $reply);
+        }
     }
 
     function analyzeMessage($telegram, $text, $welcomeMessage, $chat_id)
