@@ -4,6 +4,7 @@
     const DATE_FORMAT = "y.m.d";
     const LIMIT_OLD_RECORD = 10;
 
+    global $db;
     $db = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);  
 
     if ($db->connect_errno) 
@@ -113,7 +114,10 @@ echo isCheck();
         global $db;
         $url = $db->real_escape_string($url);
         $url_id = getUrlId($url);
-        $result = $db->query("SELECT check_url_data FROM check_url_data as uc WHERE uc.url_id = '$url_id';");
+        $result = $db->query(
+            "SELECT check_url_data FROM check_url_data as uc 
+            WHERE uc.url_id = '$url_id'
+            ORDER BY uc.check_url_data_id DESC LIMIT 1;");
         if($result->num_rows >= 1)
         {
             $row = $result->fetch_array(MYSQLI_ASSOC);
