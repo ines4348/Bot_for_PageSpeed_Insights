@@ -218,6 +218,13 @@
         return true;
     }
 
+    function addCheckHistoryDate()
+    {
+        global $db;
+        $today = date(DATE_FORMAT);
+        $result = $db->query("INSERT INTO check_history (check_history_date) VALUES ('$today');");
+    }
+
     function updateLastActivityUser($chat_id)
     {
         global $db;
