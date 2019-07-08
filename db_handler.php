@@ -196,10 +196,10 @@ echo isCheck();
             }
         }else
         {
-            $allUrlListp[] = "";
+            $allUrlList[] = "";
         }
 
-        return $allUrlListp;
+        return $allUrlList;
     }
 
     function isCheck()

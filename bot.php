@@ -43,12 +43,12 @@
         {
             addCheckHistoryDate();
             $allUrlList = array();
-            $allUrlList[] = getAllUrlList();
-            foreach($allUrlList as $currentUrl)
-            {
-                $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
-                $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
-                addCheckUrlData($currentUrl, $reply);
+            $allUrlList = getAllUrlList();
+            $count = count($allUrlList);
+            for($i = 0; $i < $count; $i++) {
+               $urlForPingApi = str_replace("{currentUrl}", $allUrlList[$i], URL_API);
+                $reply = $allUrlList[$i] . NEWLINE . getResultFromApi($urlForPingApi);
+                addCheckUrlData($allUrlList[$i], $reply);
             }
         }
     }
