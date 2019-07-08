@@ -15,7 +15,7 @@
         {
             $textResult = PERFORMANCE . ($textJson->lighthouseResult->categories->performance->score) * 100;
         }
-        if($textJson->error->->code == 500)
+        if($textJson->error->code == 500)
         {
             $textResult = ERROR_MESSAGE;
         }
