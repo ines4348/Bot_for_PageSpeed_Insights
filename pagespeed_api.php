@@ -6,7 +6,7 @@
     const MOBILE = "Мобильный телефон: \n";
     const DESCTOP = "Компьютер: \n";
     const NEWLINE = "\n";
-    const ERROR_MESSAGE = "по вашему запросу данные не найдены, пожалуйста проверьте правильность введенного адреса";
+    const ERROR_MESSAGE = "По вашему запросу данные не найдены, пожалуйста проверьте правильность введенного адреса";
 
     function getDataFromJson($responseJson): string
     {
@@ -15,7 +15,7 @@
         {
             $textResult = PERFORMANCE . ($textJson->lighthouseResult->categories->performance->score) * 100;
         }
-        if($textJson->error->errors->code == 500)
+        if($textJson->error->->code == 500)
         {
             $textResult = ERROR_MESSAGE;
         }
