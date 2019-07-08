@@ -36,6 +36,7 @@
     $chat_id = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::CHAT][TelegramCommandKey::ID]; 
     $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
     $keyboard = [COMMAND_VIEW_LIST_COMMAND]; 
+    startCheckAllUrl($telegram, $chat_id);
 
     function startCheckAllUrl($telegram, $chat_id)
     {
@@ -143,7 +144,7 @@
        $welcomeMessage = setWelcomeMessage($name);
        analyzeMessage($telegram, $text, $welcomeMessage, $chat_id);
          
-       startCheckAllUrl($telegram, $chat_id); 
+        
     }
 ?>
 
