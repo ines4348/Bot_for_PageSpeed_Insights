@@ -134,13 +134,14 @@
         }
     }
 
-    if($text){ 
-       startCheckAllUrl();    
+    if($text){   
        if(isUserSet($chat_id) == false){
            $temp = createUser($chat_id, $name);
        }
        $welcomeMessage = setWelcomeMessage($name);
        analyzeMessage($telegram, $text, $welcomeMessage, $chat_id);
+         
+       startCheckAllUrl(); 
     }
 ?>
 

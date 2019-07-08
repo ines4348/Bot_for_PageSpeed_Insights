@@ -180,7 +180,7 @@
         return $userUrlList;
     }
 
-    function getAllUrlList():
+    function getAllUrlList()
     {
         global $db;
         $result = $db->query(
