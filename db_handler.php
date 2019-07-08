@@ -101,9 +101,24 @@
         if($result->num_rows >= 1)
         {
             $row = $result->fetch_array(MYSQLI_ASSOC);
-            $user_id = $row['url_id'];
-            return $user_id;           
+            $url_id = $row['url_id'];
+            return $url_id;           
         }
+    }
+
+    function getUrlData($url)
+    {
+        global $db;
+        $url = $db->real_escape_string($url);
+        $url_id = getUrlId($url);
+        $result = $db->query("SELECT check_url_data FROM check_url_data as uc WHERE uc.url_id = '$url_id';");
+        if($result->num_rows >= 1)
+        {
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+            $urlData = $row['check_url_data'];
+            return $urlData;           
+        }
+        return false;
     }
 
     function createUser($chat_id, $name)
@@ -163,6 +178,44 @@
         }
 
         return $userUrlList;
+    }
+
+    function getAllUrlList():
+    {
+        global $db;
+        $result = $db->query(
+            "SELECT url FROM url as ur 
+            LIMIT 25000;");
+        $allUrlList = array();
+        if ($result->num_rows > 0) {
+            while($urlItem = $result->fetch_array(MYSQLI_ASSOC)) 
+            {
+                $allUrlList[] = $urlItem["url"];
+            }
+        }else
+        {
+            $allUrlListp[] = "";
+        }
+
+        return $allUrlListp;
+    }
+
+    function isCheck():
+    {
+        global $db;
+        $result = $db->query(
+            "SELECT check_history_date FROM check_history as ch 
+            ORDER BY check_history_id DESC LIMIT 1;");
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_array(MYSQLI_ASSOC)) 
+            $checkHistoryDate = $row['check_history_date'];
+            if($checkHistoryDate < date(DATE_FORMAT))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     function updateLastActivityUser($chat_id)

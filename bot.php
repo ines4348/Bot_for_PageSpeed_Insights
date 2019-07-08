@@ -37,6 +37,21 @@
     $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
     $keyboard = [COMMAND_VIEW_LIST_COMMAND]; 
 
+    function startCheckAllUrl()
+    {
+        if(isCheck())
+        {
+            $allUrlList = array();
+            $allUrlListp[] = getAllUrlList();
+            foreach($allUrlListp as $currentUrl)
+            {
+                $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
+                $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
+                addCheckUrlData($currentUrl, $reply);
+            }
+        }
+    }
+
     function setWelcomeMessage($name)
     {
         if(isset($name))
@@ -119,7 +134,8 @@
         }
     }
 
-    if($text){       
+    if($text){ 
+       startCheckAllUrl();    
        if(isUserSet($chat_id) == false){
            $temp = createUser($chat_id, $name);
        }
