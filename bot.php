@@ -37,10 +37,11 @@
     $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
     $keyboard = [COMMAND_VIEW_LIST_COMMAND]; 
 
-    function startCheckAllUrl()
+    function startCheckAllUrl($telegram, $chat_id)
     {
         if(!isCheck())
         {
+            sendMessageToChart($telegram, $chat_id, "Test");
             addCheckHistoryDate();
             $allUrlList = array();
             $allUrlList = getAllUrlList();
@@ -142,7 +143,7 @@
        $welcomeMessage = setWelcomeMessage($name);
        analyzeMessage($telegram, $text, $welcomeMessage, $chat_id);
          
-       startCheckAllUrl(); 
+       startCheckAllUrl($telegram, $chat_id); 
     }
 ?>
 

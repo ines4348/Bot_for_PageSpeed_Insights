@@ -198,7 +198,7 @@ echo isCheck();
         {
             $allUrlList[] = "";
         }
-
+     
         return $allUrlList;
     }
 
@@ -249,12 +249,6 @@ echo isCheck();
     $db->close();
 
 ?>
-
-
-
-
-
-
 
 
 
