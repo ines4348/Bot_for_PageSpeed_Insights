@@ -41,9 +41,10 @@
     {
         if(!isCheck())
         {
+            addCheckHistoryDate();
             $allUrlList = array();
-            $allUrlListp[] = getAllUrlList();
-            foreach($allUrlListp as $currentUrl)
+            $allUrlList[] = getAllUrlList();
+            foreach($allUrlList as $currentUrl)
             {
                 $urlForPingApi = str_replace("{currentUrl}", $currentUrl, URL_API);
                 $reply = $currentUrl . NEWLINE . getResultFromApi($urlForPingApi);
