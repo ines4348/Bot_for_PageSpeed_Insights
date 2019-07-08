@@ -207,7 +207,7 @@
             "SELECT check_history_date FROM check_history as ch 
             ORDER BY check_history_id DESC LIMIT 1;");
         if ($result->num_rows > 0) {
-            $row = $result->fetch_array(MYSQLI_ASSOC) 
+            $row = $result->fetch_array(MYSQLI_ASSOC); 
             $checkHistoryDate = $row['check_history_date'];
             if($checkHistoryDate < date(DATE_FORMAT))
             {
