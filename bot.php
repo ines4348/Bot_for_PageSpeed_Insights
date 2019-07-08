@@ -36,19 +36,18 @@
     $chat_id = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::CHAT][TelegramCommandKey::ID]; 
     $name = $result[TelegramCommandKey::MESSAGE][TelegramCommandKey::FROM][TelegramCommandKey::USERNAME]; 
     $keyboard = [COMMAND_VIEW_LIST_COMMAND]; 
-    startCheckAllUrl($telegram, $chat_id);
+    
 
-    function startCheckAllUrl($telegram, $chat_id)
+    function startCheckAllUrl()
     {
-        if(!isCheck())
+        if(isCheck())
         {
-            sendMessageToChart($telegram, $chat_id, "Test");
             addCheckHistoryDate();
             $allUrlList = array();
             $allUrlList = getAllUrlList();
             $count = count($allUrlList);
             for($i = 0; $i < $count; $i++) {
-               $urlForPingApi = str_replace("{currentUrl}", $allUrlList[$i], URL_API);
+                $urlForPingApi = str_replace("{currentUrl}", $allUrlList[$i], URL_API);
                 $reply = $allUrlList[$i] . NEWLINE . getResultFromApi($urlForPingApi);
                 addCheckUrlData($allUrlList[$i], $reply);
             }
@@ -137,15 +136,15 @@
         }
     }
 
+    
     if($text){   
        if(isUserSet($chat_id) == false){
            $temp = createUser($chat_id, $name);
        }
        $welcomeMessage = setWelcomeMessage($name);
-       analyzeMessage($telegram, $text, $welcomeMessage, $chat_id);
-         
-        
+       analyzeMessage($telegram, $text, $welcomeMessage, $chat_id);  
     }
+    startCheckAllUrl();
 ?>
 
 
