@@ -16,6 +16,8 @@
     $db->query("SET COLLATION_CONNECTION='utf8_general_ci'"); 
     setlocale(LC_ALL,"ru_RU.UTF8");
 
+echo isCheck();
+
     function isUserSet($chat_id)
     {
         global $db;
@@ -209,7 +211,7 @@
         if ($result->num_rows > 0) {
             $row = $result->fetch_array(MYSQLI_ASSOC); 
             $checkHistoryDate = $row['check_history_date'];
-            if($checkHistoryDate < date(DATE_FORMAT))
+            if(strtotime($checkHistoryDate) < strtotime(date(DATE_FORMAT)))
             {
                 return false;
             }
