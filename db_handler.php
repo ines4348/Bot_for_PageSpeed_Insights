@@ -200,7 +200,7 @@
         return $allUrlListp;
     }
 
-    function isCheck():
+    function isCheck()
     {
         global $db;
         $result = $db->query(
