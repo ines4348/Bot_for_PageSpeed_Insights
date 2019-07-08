@@ -39,7 +39,7 @@
 
     function startCheckAllUrl()
     {
-        if(isCheck())
+        if(!isCheck())
         {
             $allUrlList = array();
             $allUrlListp[] = getAllUrlList();
