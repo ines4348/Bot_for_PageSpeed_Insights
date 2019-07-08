@@ -26,7 +26,7 @@
     function getResultFromApi($urlApi): string
     {
         $textResult = MOBILE . getResponseApi($urlApi . PARAMETR_MOBILE) . NEWLINE;
-        //$textResult = $textResult . DESCTOP . getResponseApi($urlApi . PARAMETR_DESCTOP);
+        $textResult = $textResult . DESCTOP . getResponseApi($urlApi . PARAMETR_DESCTOP);
         return $textResult;
     }
     

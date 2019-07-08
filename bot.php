@@ -141,16 +141,17 @@
 
     
     if($text){   
-       if(isUserSet($chat_id) == false){
-           $temp = createUser($chat_id, $name);
-       }
-       $welcomeMessage = setWelcomeMessage($name);
-       analyzeMessage($telegram, $text, $welcomeMessage, $chat_id);  
-    }
-
-    register_shutdown_function(function () {
+        if(isUserSet($chat_id) == false){
+            $temp = createUser($chat_id, $name);
+        }
+        $welcomeMessage = setWelcomeMessage($name);
+        analyzeMessage($telegram, $text, $welcomeMessage, $chat_id);
+        register_shutdown_function(function () {
         http_response_code(200);
     });
+    }
+
+
 ?>
 
 
